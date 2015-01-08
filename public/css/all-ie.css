@@ -1,0 +1,9 @@
+
+
+.banner-form, .city-form, .overlay{
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#4f000000', endColorstr='#4f000000');
+}
+
+header .nav {
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#233a1a0', endColorstr='#233a1a0'); 
+}
