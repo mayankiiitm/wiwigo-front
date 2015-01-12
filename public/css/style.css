@@ -26,7 +26,7 @@
 	outline: 0;
 }
 
-ul,ol{
+ul, ol{
 	list-style: none;
 }
 
@@ -428,6 +428,7 @@ footer .social ul li i.sprit-goolge{
 	color:#fff;
 	text-align: center;
 	font-weight: 400;
+	font-size: 30px;
 }
 
 .form-box ul li{
@@ -807,7 +808,7 @@ aside{
 .checkbox{
 	text-align: left;
 	margin: 0;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 }
 .checkbox label span{
 	color:#ff6100;
@@ -1084,6 +1085,105 @@ label.css-label {
 	background-position:-23px 0;
 }
 
+.paybox{
+	position: relative;
+}
+
+.paybox > span{
+	font-size: 16px;
+}
+
+
+.payview{
+	background: #f9f0f0;
+	border:1px solid #c2bfbf;
+	width:171px;
+	height: 102px;
+	padding:0 10px;
+	position: absolute;
+	right: 0;
+	top:-105px;
+	z-index: 50;
+	display: none;
+}
+
+.payview p{
+	font-size: 16px;
+	margin-bottom: 0;
+}
+
+.paytext span{
+	display: inline-block;
+	font-size: 20px;
+	line-height: 22px;
+	text-transform: uppercase;
+}
+.paytext span small{
+	margin-left: 3px;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	border-radius:50%;
+	border: 1px solid #000;
+	font-size: 21px;
+	cursor: pointer;
+	text-align: center;
+}
+
+
+
+.results-row h4{
+	margin: 0 0 22px 0;
+	font-size: 22px;
+	border-bottom: 1px solid #d5d5d5;
+	padding-bottom: 10px;
+	font-weight: 400;
+}
+
+.modelbox{
+	margin-top: 10px;
+	height: 150px;
+	overflow-y:scroll;
+}
+.modelbox .checkbox+.checkbox{
+	margin-top: 5px;
+	clear: both;
+}
+.modelbox .checkbox .css-label,
+.amenities-row .checkbox .css-label{
+	text-transform: capitalize;
+}
+
+.resultbox .seats-row{
+	padding-top: 5px;
+}
+
+.amenities-row{
+	padding-top: 5px;
+}
+.amenities-row .checkbox+.checkbox{
+	padding-top: 10px;
+}
+.modelbox, .seats-row{
+	display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -1139,6 +1239,7 @@ pagination
 	float: left;
 	background:url(../images/green.png) left center no-repeat;
 	padding-left: 15px;
+	font-size: 14px;
 }
 .article-info .list-b li+li{
 	margin-left: 10px;
@@ -1148,13 +1249,15 @@ pagination
 	border-top: 1px solid #ededed;
 	max-height: 10px;
 }
+.exchange{
+	padding-bottom: 7px;
+}
 .exchange span, .exchange small{
 	display: inline-block;
 }
 
 
 .exchange span{
-	font-weight: 700;
 	font-size: 17px;
 	cursor: pointer;
 }
@@ -1218,14 +1321,12 @@ pagination
 	display: block;
 	font-size:20px;
 	text-transform: capitalize;
-	font-weight: 700;
 }
 
 .distance p{
 	margin-bottom: 0;
 	padding-bottom: 0;
 	font-size:18px;
-	font-weight: 400;
 }
 
 
@@ -1241,6 +1342,7 @@ pagination
 	font-size: 20px;
 	margin-bottom: 5px;
 	cursor: pointer;
+	text-transform:capitalize;
 }
 .sprit-airro{
 	display: block;
@@ -1253,7 +1355,7 @@ pagination
 .sprit-airro.active{
 	background-position: -175px -125px;
 }
-.rating-bar, .progress-main{
+.rating-bar{
 	display: none;
 }
 .rating-bar > span{
@@ -1268,9 +1370,7 @@ pagination
 	position: relative;
 
 }
-.rating-bar ul li+li{
-	padding-top: 5px;
-}
+
 .rating-bar ul li input{
 	float: left;
 	margin-right: 7px;
@@ -1373,6 +1473,7 @@ popup end
 	text-transform: capitalize;
 	color:#d0100c;
 	font-weight: 400;
+	padding-left: 20px;
 }
 .travel-text{
 	padding-left: 20px;
@@ -1455,7 +1556,7 @@ MY-ACCOUNT PAGE
 }
 
 .my-details{
-	margin-bottom:30px;
+	margin-bottom:20px;
 }
 .my-details+.my-details{
 	margin-bottom: 0;
@@ -1658,14 +1759,14 @@ BOOKINK CONFIRMATION
 
 
 .chose-details h4{
-	font-size: 24px;
+	font-size: 22px;
 	font-weight: 400;
 	text-transform: capitalize;
 }
 
 .chose-details p{
 	text-transform: capitalize;
-	font-size: 18px;
+	font-size: 16px;
 	margin-bottom: 0;
 	padding-bottom: 3px;
 }
@@ -1854,7 +1955,7 @@ Agency Registration
 .agency-registration ul li{
 	float: left;
 	width:49%;
-	margin-bottom: 15px;
+	margin-bottom: 25px;
 	position: relative;;
 }
 
@@ -1901,7 +2002,16 @@ Agency Registration
 }
 
 
-
+.vehicle-checkbox{
+	padding-bottom: 10px;
+}
+.addition.agency-registration .checkbox{
+	padding-bottom: 0;
+}
+.addition.agency-registration label.css-label{
+	font-size: 17px;
+	color:#9c9c9c;
+}
 
 
 /*
@@ -2224,8 +2334,30 @@ AGENCY ACCOUNT
 	border-top: 1px solid #ccc;
 	padding-top: 18px;
 }
+
+
+.order-row{
+	padding-left: 0;
+}
+.order-row > li{
+	border-bottom:1px solid #dcdcdc;
+	margin-bottom: 15px;
+}
+
+.number{
+	display: inline-block;
+	background: #ff7a27;
+	border-radius:50%;
+	color:#fff;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+
  .order-row p{
  	cursor: pointer;
+ 	display: inline-block;
 }
 .order-row p.active{
 	font-weight: 700;
@@ -2236,14 +2368,15 @@ AGENCY ACCOUNT
 }
 .history h2{
 	text-transform: capitalize;
-	margin-bottom: 15px;
+	margin-bottom: 15px;a
 }
 
 
-.check-row{
+/*.check-row{
 	height: 52px;
 	line-height: 52px;
-}
+}*/
+
 .check-row .checkbox{
 	display: inline-block;
 }
@@ -2526,6 +2659,7 @@ INPUT TYPE FILE CUSTOME
 
 .button-row .fileUpload{
 	margin-right: 10px;
+	margin-bottom: 15px;
 }
 .button-row button{
 	margin-right: 8px;
@@ -2571,7 +2705,10 @@ INPUT TYPE FILE CUSTOME
 }
 
 
-
+.italic .selecter-selected{
+	font-style:italic;
+	color:red;
+}
 
 
 

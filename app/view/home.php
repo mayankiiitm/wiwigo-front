@@ -48,8 +48,9 @@ DATA:<br><textarea id="data" rows="5" cols="50"></textarea><br>
 <textarea id="result" rows="50" cols="100"></textarea>
 
 <script >
+    var urls=<?="'".$_SERVER['SERVER_ADDR']."'"?>;
    $(".sel").change(function(){
-      $("#url").val('127.0.0.1'+$(this).val());
+      $("#url").val(urls+$(this).val());
    });
 	$("#get").click(function(){
       $("#result").val('');

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'framework/Route.php';
 require_once 'helper/Helper.php';
 require_once 'framework/Controller.php';

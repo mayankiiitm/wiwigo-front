@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Welcome To Wiwigo</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<title>Book Outstation Cab Rental</title>
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/parsley.css">
  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="/css/all-ie.css">
+      <link rel="stylesheet" type="text/css" href="css/all-ie.css">
  <![endif]-->
 </head>
 <body>
@@ -68,20 +69,21 @@
 					<div class="col-md-12">
 						<div class="heading-two"><h2>Agency Registration</h2></div>
 						<div class="agency-registration">
-							<form action="#" method="post" name="reg">
+							<form action="#" method="post">
 								<ul class="registran clearfix">
-									<li class="pull-left"><input type="text" name="organization" placeholder="Organization Name"></li>
-									<li class="pull-right"><input type="text" name="name" placeholder="Contact Name"></li>
-									<li class="pull-left"><input type="text" name="landline" placeholder="Landline"></li>
-									<li class="pull-right"><input type="text" name="mobile" placeholder="Mobile Number"></li>
-									<li class="pull-left"><input type="text" name="email" placeholder="Email"></li>
+									<li class="pull-left"><input type="text" name="organization" placeholder="Organization Name" data-parsley-length="[4, 250]" data-parsley-required="true" data-parsley-error-message="Organization Name must be in range 4-250"></li>
+									<li class="pull-right"><input type="text" name="name" placeholder="Contact Name" data-parsley-length="[4, 50]" data-parsley-required="true" data-parsley-error-message="Contact Name must be in range 4-25"></li>
+									<li class="pull-left"><input type="text" name="landline" placeholder="Landline" data-parsley-type="number" data-parsley-required="true" data-parsley-error-message="Not a valid landline number"></li>
+									<li class="pull-right"><input type="text" name="mobile" placeholder="Mobile Number" data-parsley-pattern="\d{10}" data-parsley-required="true" data-parsley-error-message="Not a valid mobile number"></li>
+									<li class="pull-left"><input type="text" name="email" placeholder="email" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Not a valid Email Address" id="email"><span class="error-block" id="email-error">This email is already registered with us</span></li>
 									
-									<li class="pull-right"><input type="text" name="username" placeholder="Username"></li>
+									
+									
 
 									<li class="clearboth">
-										<select id="state" name="state">
+										<select id="state" name="state" data-parsley-required="true" data-parsley-min=1 data-parsley-error-message="Please select state">
 											<option value="0"><em>---Select State---</em></option>
-											<option>Andaman &amp; Nicobar</option>
+											<option value="1">Andaman &amp; Nicobar</option>
 											<option value="2">Andhra Pradesh</option>
 											<option value="3">Arunachal Pradesh</option>
 											<option value="4">Assam</option>
@@ -120,24 +122,23 @@
 									</li>
 
 									<li class="clearboth">
-										<input type="text" name="city" placeholder="City" id="city">
+										<input type="text" name="city" placeholder="City" id="city" data-parsley-required="true" data-parsley-error-message="Please fill in City">
 									</li>
-
 									<li class="clearboth">
-										<select name="area">
-											<option>Area</option>
-											<option>Area</option>
-											<option>Area</option>
-										</select>
+										<input type="text" name="area" placeholder="Area" id="area" data-parsley-required="true" data-parsley-error-message="Please fill in Area">
 									</li>
+									<li><input type="text" name="address" placeholder="Address" data-parsley-length="[4, 250]" data-parsley-required="true" data-parsley-error-message="Address must be in range 4-250"></li>
+									
+									
+									<li><input type="text" name="pin" placeholder="Pin Code" data-parsley-length="[6,6]" data-parsley-required="true" data-parsley-error-message="Not a valid PIN"></li>
 
-									<li><input type="text" name="address" placeholder="Address"></li>
-									
-									
-									<li><input type="text" name="pin" placeholder="Pin Code"></li>
+									<li><input type="text" name="username" placeholder="Username" id="username" data-parsley-required="true" data-parsley-length="[4, 50]" data-parsley-error-message="Username must be in range 4-50"><span class="error-block" id="username-error">Someone has taken this username already</span></li>
+									<li class="pull-left"><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-minlength="5" data-parsley-error-message="Password must be at least 5 character long" id="password"></li>
+									<li class="pull-right"><input type="password" name="confirm" placeholder="Confirm Password" data-parsley-required="true" data-parsley-equalto="#password" data-parsley-error-message="Confirm Password and Password must be same"></li>
+									<input type="hidden" value="<?=$_SESSION['request_token']?>" name="request_token">
 								</ul>
 								<div class="button-row">
-									<button type="submit" class="btn btn-success btn-vehicle">register</button>
+									<button type="submit" class="btn btn-success btn-vehicle" id="submit">register</button>
 								</div>
 							</form>
 						</div>
@@ -203,11 +204,11 @@
 
 <!--jquery libraries-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+<script>window.jQuery || document.write('<script src="/js/jquery-1.11.1.min.js"><\/script>')</script>
 
 <!--jqueryui plugin-->
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script>window.jQuery.ui || document.write('<script src="js/jquery-ui.min.js"><\/script>')</script>
+<script>window.jQuery.ui || document.write('<script src="/js/jquery-ui.min.js"><\/script>')</script>
 
 <!--Custome selectbox plugin-->
 <script type="text/javascript" src="/js/jquery.fs.selecter.js"></script>
@@ -220,14 +221,63 @@
 
 <!--datetimepicker plugin-->
 <script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
-
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <!--Custom-->
 <script type="text/javascript" src="/js/custom.js"></script>
-
+<script type="text/javascript" src="/js/parsley.js"></script>
 <script type="text/javascript">
+$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
+$("form").submit(function(e){
+	e.preventDefault();
+	$.ajax({
+		url:'http://127.0.0.1/agency/register',
+		type:'POST',
+		data:$(this).serialize(),
+		success: function(data){
+			var result=$.parseJSON(data);
+			if (result.error[0]=='401'){
+				$.ajax({
+					url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
+					type:'GET',
+					success: function(data){
+						var result=$.parseJSON(data);
+						$('input[name=request_token]').val(result.data.request_token);
+						$.ajax({
+							url:'http://127.0.0.1/agency/register',
+							type:'POST',
+							data:$("form").serialize(),
+							success:function(data){
+								if($.inArray(100 , result.error)>-1) {
+									$("#email-error").show();
+								}else if($.inArray(101 ,result.error)>-1) {
+									$("#username-error").show();
+								}else {
+									window.location.replace('http://10.0.0.3/agency/login');
+								}
+							}				
+						});			
+					}
+				});
+			}else if($.inArray(100 , result.error)>-1) {
+				$("#email-error").show();
+			}else if($.inArray(101 ,result.error)>-1) {
+				$("#username-error").show();
+			}else {
+				window.location.replace('http://10.0.0.3/agency/login');
+			}
+		}
+	});
+});
+$('#email').click(function(){
+	$("#email-error").hide();
+});
+$('#username').click(function(){
+	$("#username-error").hide();
+});
 var availablecities=[];
+var state='';
 $("#city").click(function(){
-	if ($("#state").val()>0){
+	if ($("#state").val()>0 && $("#state").val()!=state){
 		$.ajax({
 			url:'http://10.0.0.230/term/cities',
 			type:'GET',
@@ -241,24 +291,12 @@ $("#city").click(function(){
 				console.log(availablecities);
 			}
 		});
+		state=$("#state").val();
 	};
 });
 $( "#city" ).autocomplete({
 source: availablecities
 });
-$("form").submit(function(e){
-	e.preventDefault();
-	var data=$(this).serialize();
-	$.ajax({
-		url:'http://10.0.0.230/agency/register',
-		type:'POST',
-		data: data+'&request_token=1',
-		success: function(data){
-			alert(data);
-		}
-	});
-});
- </script>
-
+</script>
 </body>
 </html>
