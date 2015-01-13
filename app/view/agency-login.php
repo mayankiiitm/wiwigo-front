@@ -72,12 +72,12 @@
 							<form action="#" method="post">
 								<ul class="registran clearfix">
 								
-									<li><input type="text"  placeholder="Email/Username" data-parsley-required="true" data-parsley-error-message="Please enter Email or Username" id="email"></li>
+									<li><input type="text"  placeholder="Email/Username" data-parsley-required="true" data-parsley-error-message="Please enter Email or Username" id="email" name="email"></li>
 									<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-error-message="Please enter your password" id="password"></li>
 									<input type="hidden" value="<?=$_SESSION['request_token']?>" name="request_token">
 								</ul>
 								<div class="button-row">
-									<button type="submit" class="btn btn-success btn-vehicle" id="submit">register</button>
+									<button type="submit" class="btn btn-success btn-vehicle" id="submit">LOGIN</button>
 								</div>
 							</form>
 						</div>
@@ -165,7 +165,7 @@
 <script type="text/javascript" src="/js/custom.js"></script>
 <script type="text/javascript" src="/js/parsley.js"></script>
 <script type="text/javascript">
-	$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
+	/*$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
 	$('form').submit(function(e){
 		e.preventDefault();
 		$.ajax({
@@ -187,7 +187,8 @@
 								data:$(this).serialize(),
 								success: function(data){
 									if(result.success=='1'){
-									//login
+										$.cookie('access_token','result.data.access_token');
+										alert('hello');
 									}else{
 										//some error
 									}
@@ -196,11 +197,45 @@
 						}	
 					});
 				}else if(result.success=='1'){
-					//login
+					$.cookie('access_token','result.data.access_token');
 				}else{
 					//some error
 				}
 			}
 		});
-	});
+	});*/
+$('form').submit(function(e){
+	e.preventDefault();
+	$("#submit").attr('disabled','true');
+	$("#submit").text('Processing...');
+	$.ajax({
+        url: 'http://127.0.0.1/agency/login',
+        data: $(this).serialize(),
+        type: 'POST'
+    }).done(function(data){
+		result=$.parseJSON(data);
+		if (result.error[0]=='401') {
+			$.ajax({
+				url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
+				type:'GET',
+				success: function(data){
+					var result=$.parseJSON(data);
+					$('input[name=request_token]').val(result.data.request_token);
+					$('form').submit();
+				}
+			});
+		}else if (result.success==1) {
+			$.cookie('access_token',result.data.access_token);
+		}else if ($.inArray(104,result.error)>-1) {
+			alert('invalid credential');
+			$("#submit").removeAttr('disabled','true');
+	        $("#submit").text('LOGIN');
+		}else{
+			$("#submit").removeAttr('disabled','true');
+	        $("#submit").text('LOGIN');
+		}
+	})
+});
 </script>
+</body>
+</html>

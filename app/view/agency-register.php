@@ -75,11 +75,7 @@
 									<li class="pull-right"><input type="text" name="name" placeholder="Contact Name" data-parsley-length="[4, 50]" data-parsley-required="true" data-parsley-error-message="Contact Name must be in range 4-25"></li>
 									<li class="pull-left"><input type="text" name="landline" placeholder="Landline" data-parsley-type="number" data-parsley-required="true" data-parsley-error-message="Not a valid landline number"></li>
 									<li class="pull-right"><input type="text" name="mobile" placeholder="Mobile Number" data-parsley-pattern="\d{10}" data-parsley-required="true" data-parsley-error-message="Not a valid mobile number"></li>
-									<li class="pull-left"><input type="text" name="email" placeholder="email" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Not a valid Email Address" id="email"><span class="error-block" id="email-error">This email is already registered with us</span></li>
-									
-									
-									
-
+									<li class="pull-left"><input type="text" name="email" placeholder="email" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Not a valid Email Address" id="email"><span class="error-block" id="email-error">This email is already registered with us</span></li>																										
 									<li class="clearboth">
 										<select id="state" name="state" data-parsley-required="true" data-parsley-min=1 data-parsley-error-message="Please select state">
 											<option value="0"><em>---Select State---</em></option>
