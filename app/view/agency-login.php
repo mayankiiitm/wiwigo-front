@@ -206,11 +206,12 @@
 	});*/
 $('form').submit(function(e){
 	e.preventDefault();
+	var formData=$(this).serialize();
 	$("#submit").attr('disabled','true');
 	$("#submit").text('Processing...');
 	$.ajax({
         url: 'http://127.0.0.1/agency/login',
-        data: $(this).serialize(),
+        data: formData,
         type: 'POST'
     }).done(function(data){
 		result=$.parseJSON(data);
@@ -225,7 +226,8 @@ $('form').submit(function(e){
 				}
 			});
 		}else if (result.success==1) {
-			$.cookie('access_token',result.data.access_token);
+			$.cookie('agency_token',result.data.access_token);
+			window.location.replace('http://10.0.0.3/agency/login');
 		}else if ($.inArray(104,result.error)>-1) {
 			alert('invalid credential');
 			$("#submit").removeAttr('disabled','true');

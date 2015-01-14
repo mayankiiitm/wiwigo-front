@@ -17,5 +17,10 @@ class Auth
         $_SESSION['request_token']=$arr->data->request_token;
         return $arr->data->request_token;
     }
+    public static function agency_token(){
+        $token=$_COOKIE['token'];
+        $db=new Model;
+        $db->update("UPDATE agencies SET at_time=NOW() WHERE access_token=?",array($token));
+    }
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
 date_default_timezone_set('Asia/Kolkata');
 define('DB_NAME', 'wiwigo');
-define('DB_USER', 'root');
+define('DB_USER', 'wiwigo');
 define('DB_PASSWORD', '');
-define('DB_HOST', '127.0.0.1');
+define('DB_HOST', '10.0.0.230');
 define('DRIVER','mysql');
 define('AUTH_TABLE', 'auth');
 define('DISTANCE_API_KEY','AIzaSyAfG0oqAplPEDV0-JERRDxvBAmDSU1b0ZI');
