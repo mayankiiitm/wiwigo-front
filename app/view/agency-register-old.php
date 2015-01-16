@@ -10,7 +10,7 @@
  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="/css/all-ie.css">
+      <link rel="stylesheet" type="text/css" href="css/all-ie.css">
  <![endif]-->
 </head>
 <body>
@@ -67,17 +67,74 @@
 			<div class="col-md-9 col-sm-9">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="heading-two"><h2>Agency Login</h2></div>
+						<div class="heading-two"><h2>Agency Registration</h2></div>
 						<div class="agency-registration">
 							<form action="#" method="post">
 								<ul class="registran clearfix">
-								
-									<li><input type="text"  placeholder="Email/Username" data-parsley-required="true" data-parsley-error-message="Please enter Email or Username" id="email" name="email"><span class="error-block" id="email-error">Invalid Username/Email or Password</span></li>
-									<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-error-message="Please enter your password" id="password"></li>
+									<li class="pull-left"><input type="text" name="organization" placeholder="Organization Name" data-parsley-length="[4, 250]" data-parsley-required="true" data-parsley-error-message="Organization Name must be in range 4-250"></li>
+									<li class="pull-right"><input type="text" name="name" placeholder="Contact Name" data-parsley-length="[4, 50]" data-parsley-required="true" data-parsley-error-message="Contact Name must be in range 4-25"></li>
+									<li class="pull-left"><input type="text" name="landline" placeholder="Landline" data-parsley-type="number" data-parsley-required="true" data-parsley-error-message="Not a valid landline number"></li>
+									<li class="pull-right"><input type="text" name="mobile" placeholder="Mobile Number" data-parsley-pattern="\d{10}" data-parsley-required="true" data-parsley-error-message="Not a valid mobile number"></li>
+									<li class="pull-left"><input type="text" name="email" placeholder="email" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Not a valid Email Address" id="email"><span class="error-block" id="email-error">This email is already registered with us</span></li>																										
+									<li class="clearboth">
+										<select id="state" name="state" data-parsley-required="true" data-parsley-min=1 data-parsley-error-message="Please select state">
+											<option value="0"><em>---Select State---</em></option>
+											<option value="1">Andaman &amp; Nicobar</option>
+											<option value="2">Andhra Pradesh</option>
+											<option value="3">Arunachal Pradesh</option>
+											<option value="4">Assam</option>
+											<option value="5">Bihar</option>
+											<option value="6">Chandigarh</option>
+											<option value="7">Chhattisgarh</option>
+											<option value="8">Dadra &amp; Nagar Haveli</option>
+											<option value="9">Daman &amp; Diu</option>
+											<option value="10">Delhi</option>
+											<option value="11">Goa</option>
+											<option value="12">Gujarat</option>
+											<option value="13">Haryana</option>
+											<option value="14">Himachal Pradesh</option>
+											<option value="15">Jammu &amp; Kashmir</option>
+											<option value="16">Jharkhand</option>
+											<option value="17">Karnataka</option>
+											<option value="18">Kerala</option>
+											<option value="19">Lakshadweep</option>
+											<option value="20">Madhya Pradesh</option>
+											<option value="21">Maharashtra</option>
+											<option value="22">Manipur</option>
+											<option value="23">Meghalaya</option>
+											<option value="24">Mizoram</option>
+											<option value="25">Nagaland</option>
+											<option value="26">Orissa</option>
+											<option value="27">Pondicherry</option>
+											<option value="28">Punjab</option>
+											<option value="29">Rajasthan</option>
+											<option value="30">Sikkim</option>
+											<option value="31">Tamil Nadu</option>
+											<option value="32">Tripura</option>
+											<option value="33">Uttar Pradesh</option>
+											<option value="34">Uttaranchal</option>
+											<option value="35">West Bengal</option>
+										</select>
+									</li>
+
+									<li class="clearboth">
+										<input type="text" name="city" placeholder="City" id="city" data-parsley-required="true" data-parsley-error-message="Please fill in City">
+									</li>
+									<li class="clearboth">
+										<input type="text" name="area" placeholder="Area" id="area" data-parsley-required="true" data-parsley-error-message="Please fill in Area">
+									</li>
+									<li><input type="text" name="address" placeholder="Address" data-parsley-length="[4, 250]" data-parsley-required="true" data-parsley-error-message="Address must be in range 4-250"></li>
+									
+									
+									<li><input type="text" name="pin" placeholder="Pin Code" data-parsley-length="[6,6]" data-parsley-required="true" data-parsley-error-message="Not a valid PIN"></li>
+
+									<li><input type="text" name="username" placeholder="Username" id="username" data-parsley-required="true" data-parsley-length="[4, 50]" data-parsley-error-message="Username must be in range 4-50"><span class="error-block" id="username-error">Someone has taken this username already</span></li>
+									<li class="pull-left"><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-minlength="5" data-parsley-error-message="Password must be at least 5 character long" id="password"></li>
+									<li class="pull-right"><input type="password" name="confirm" placeholder="Confirm Password" data-parsley-required="true" data-parsley-equalto="#password" data-parsley-error-message="Confirm Password and Password must be same"></li>
 									<input type="hidden" value="<?=$_SESSION['request_token']?>" name="request_token">
 								</ul>
 								<div class="button-row">
-									<button type="submit" class="btn btn-success btn-vehicle" id="submit">LOGIN</button>
+									<button type="submit" class="btn btn-success btn-vehicle" id="submit">register</button>
 								</div>
 							</form>
 						</div>
@@ -89,10 +146,6 @@
 	</div>
 </div>
 <!--content end-->
-
-</div>
-<!--WRAPPER END-->
-
 
 <!--footer start-->
 <footer>
@@ -141,6 +194,8 @@
 	</div>
 </footer>
 <!--footer end-->
+</div>
+<!--WRAPPER END-->
 
 
 <!--jquery libraries-->
@@ -162,55 +217,11 @@
 
 <!--datetimepicker plugin-->
 <script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
-
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
 <!--Custom-->
 <script type="text/javascript" src="/js/custom.js"></script>
-
-
 <script type="text/javascript" src="/js/parsley.js"></script>
-<script type="text/javascript" src="/js/cookie.js"></script>
 <script type="text/javascript">
-$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
-$('form').submit(function(e){
-	e.preventDefault();
-	$('#submit').html("<i class='loder'></i>");
-	var formData=$(this).serialize();
-	$("#submit").attr('disabled','true');
-	$("#submit").text('Processing...');
-	$.ajax({
-        url: 'http://127.0.0.1/agency/login',
-        data: formData,
-        type: 'POST'
-    }).done(function(data){
-		result=$.parseJSON(data);
-		if (result.error[0]=='401') {
-			$.ajax({
-				url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
-				type:'GET',
-				success: function(data){
-					var result=$.parseJSON(data);
-					$('input[name=request_token]').val(result.data.request_token);
-					$('form').submit();
-				}
-			});
-		}else if (result.success==1) {
-			$.cookie('atoken',result.data.access_token);
-			window.location.replace('http://10.0.0.3/agency/login');
-		}else if ($.inArray(104,result.error)>-1) {
-			$("#email-error").show();
-			$('input[name=password]').val('');
-			$("#submit").removeAttr('disabled','true');
-	        $("#submit").text('LOGIN');
-		}else{
-			$("#email-error").text('Some Error Ocuured. Please try again').show();
-			$("#submit").removeAttr('disabled','true');
-	        $("#submit").text('LOGIN');
-		}
-	})
-});
-$('#email,#password').click(function(){
-	$("#email-error").hide();
-});
 </script>
 </body>
 </html>

@@ -17,6 +17,11 @@ $(document).ready(function(){
 	});
 	//  CUSTOME CHECKBOX IE8 SUPPORT
 
+	// FLASH 
+		$('.flash .close-b').click(function(){
+			$(this).parents('.flash').fadeOut();
+		});
+
 
 	// PLACEHOLDER IE LOWER THEN 10 SUPPORT 
 	  function add() {

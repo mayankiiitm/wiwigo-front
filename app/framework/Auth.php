@@ -4,7 +4,6 @@ class Auth
     public static function hash($data,$key){
         return hash_hmac('sha256', $data, $key);
     }
-
     public static function request_token(){
         $time=time();
         $data=PUBLIC_KEY.$time.PRIVATE_KEY;
@@ -17,10 +16,34 @@ class Auth
         $_SESSION['request_token']=$arr->data->request_token;
         return $arr->data->request_token;
     }
-    public static function agency_token(){
-        $token=$_COOKIE['token'];
-        $db=new Model;
-        $db->update("UPDATE agencies SET at_time=NOW() WHERE access_token=?",array($token));
+    public static function agency(){
+        if(isset($_COOKIE['atoken'])){
+            $token=$_COOKIE['atoken'];
+            $_SESSION['a_token']=$token;
+            setcookie('atoken',null);
+            setcookie('a_token',$token,time()+3600*24*365);
+            $curl=new curl;
+            $data=$curl->get('http://10.0.0.230/agency/details?access_token='.$token);
+            $details=json_decode($data->text);
+            echo 1;
+            return $details;
+        }
+        if (isset($_SESSION['a_token'])) {
+            echo 2;
+            $curl=new curl;
+            $data=$curl->get('http://10.0.0.230/agency/details?access_token='.$_SESSION['a_token']);
+            $details=json_decode($data->text);
+            if ($details->error[0]==401) {
+                echo 3;
+                $data1=$curl->post('http://10.0.0.230/agency/refresh?access_token='.$_SESSION['a_token']);
+                $data2=json_decode($data1->text);
+                $data3=$curl->get('http://10.0.0.230/agency/details?access_token='.$data2->data->access_token);
+                $_SESSION['a_token']=$data2->data->access_token;
+                $details1=json_decode($data3->text);
+                return $details1;
+            }
+            return $details;
+        }
     }
 }
 ?>

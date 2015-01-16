@@ -66,11 +66,31 @@ body{
       font-weight: 300;
 }
 
+/*STICKY FOOTER
+=========================================*/
+html, body{
+	height: 100%;
+}
+
+#wrapper{
+	min-height: 100%;
+}
+
+.content{
+	overflow: auto;
+	padding-bottom: 150px;
+}
+
+footer{
+	position: relative;
+	margin-top: -150px;
+	height: 150px;
+}
 
 
-/*======================================================================
+/*==============================================
 1) GLOBAL CSS
-========================================================================*/
+================================================*/
 h1,h2,h3,h4,h5,h6{
 	font-weight: 300;
 }
@@ -200,7 +220,7 @@ header{
 	top: 0;
 	width: 100%;
 	z-index:500;
-	padding: 10px 0;
+	padding: 4px 0;
 }
 
 .help{
@@ -1260,6 +1280,7 @@ pagination
 .exchange span{
 	font-size: 17px;
 	cursor: pointer;
+	font-weight: 400;
 }
 .exchange small{
 	font-size:30px;
@@ -1619,11 +1640,31 @@ MY-ACCOUNT PAGE
 }
 
 
-
-
 /*
 BOOKINK CONFIRMATION
 --------------------------------------------------------*/
+.border-printtype{
+	border:5px dashed #31598c;
+	position: relative;
+}
+.border-left, .border-right{
+	display: block;
+	width: 27px;
+	height: 61px;
+	position: absolute;
+	z-index: 50;
+	top:50%;
+	margin-top: -30px;
+	background: url(../images/border-img.png) left top no-repeat;
+}
+.border-left{
+	background-position: 0 0;
+	left: -5px;
+}
+.border-right{
+	background-position: -27px 0;
+	right: -5px;
+}
 
 .pickupbox h4{
 	margin-top: 0;
@@ -1631,7 +1672,7 @@ BOOKINK CONFIRMATION
 
 .paddingadjust-confir.content{
 	padding-top: 38px;
-	padding-bottom: 125px;
+	margin-bottom: 125px;
 
 }
 .booking-confir{
@@ -2283,18 +2324,16 @@ AGENCY ACCOUNT
 
 .username h5{
 	font-size:20px;
-	font-weight: 700;
 	text-transform: capitalize; 
 	margin: 0 0 3px 0;
 }
 
 .username p{
-	font-size: 17px;
+	font-size: 16px;
 }
 
 .viewstar p{
-	font-size: 22px;
-	font-weight: 400;
+	font-size: 18px;
 	padding-bottom: 0;
 }
 
@@ -2304,7 +2343,6 @@ AGENCY ACCOUNT
 .viewstar ul li{
 	float: left;
 	text-transform: capitalize;
-	font-weight: 400;
 }
 .viewstar ul li+li{
 	padding-left: 5px;
@@ -2352,6 +2390,7 @@ AGENCY ACCOUNT
 	width: 20px;
 	height: 20px;
 	line-height: 20px;
+	font-size: 14px;
 	text-align: center;
 }
 
@@ -2665,11 +2704,6 @@ INPUT TYPE FILE CUSTOME
 	margin-right: 8px;
 }
 
-
-
-
-
-
 /*---------------------	MEDIA QUERY ADJUST------------------*/
 
 @media (max-width:1200px){
@@ -2714,3 +2748,38 @@ INPUT TYPE FILE CUSTOME
 
 
 
+
+/*
+Flash css
+-----------------------*/
+.flash{
+	display: inline-block;
+	background: #ff6100;
+	max-width: 100%;
+	padding:10px 20px;
+	position: relative;
+	box-sizing: border-box;
+}
+.flash p{
+	margin-bottom: 0;
+	padding-bottom: 0;
+	color:#fff;
+	font-size: 16px;
+}
+
+.flash .close-b{
+	width: 20px;
+	height: 20px;
+	font-size: 15px;
+	line-height: 18px;
+}
+/*
+Loder css
+----------------------*/
+.loder{
+	display:inline-block;
+	width: 45px;
+	background: url(../images/animation.gif) left top no-repeat;
+	background-size:40px;
+	height:75px; 
+}

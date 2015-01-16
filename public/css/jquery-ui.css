@@ -1239,7 +1239,7 @@ body .ui-tooltip {
 
 
 .ui-slider.ui-slider-horizontal.ui-widget.ui-widget-content.ui-corner-all{
-	background:#ff6100;
+	background:#ccc;
 	height: 3px;
 	border: 0;
 }
