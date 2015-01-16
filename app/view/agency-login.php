@@ -226,8 +226,7 @@ $('form').submit(function(e){
 				}
 			});
 		}else if (result.success==1) {
-			$.cookie('atoken',result.data.access_token);
-			$.cookie('aemail',$('input[name=email]').val());
+			$.cookie('agency_token',result.data.access_token);
 			window.location.replace('http://10.0.0.3/agency/login');
 		}else if ($.inArray(104,result.error)>-1) {
 			alert('invalid credential');

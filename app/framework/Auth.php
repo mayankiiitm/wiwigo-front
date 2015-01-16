@@ -18,14 +18,9 @@ class Auth
         return $arr->data->request_token;
     }
     public static function agency_token(){
-        if(isset($_COOKIE['a_token']) && isset($_COOKIE['a_email'])){
-            $email=$_COOKIE['a_email'];
-            $token=$_COOKIE['a_token'];
-            $token=Agencies::get_token(array('a_email'=>$email,'a_token'=>$token));
-            setcookie('a_token',$token['access_token'],time()+60*60*24);
-            return $token;
-        }
-        return false;
+        $token=$_COOKIE['token'];
+        $db=new Model;
+        $db->update("UPDATE agencies SET at_time=NOW() WHERE access_token=?",array($token));
     }
 }
 ?>
