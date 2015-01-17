@@ -6,7 +6,7 @@ class Agency
 {
 	function __construct(){
 		Auth::request_token();
-		if ($data=Auth::agency()) {
+		if (isset($_COOKIE['atoken']) || isset($_COOKIE['a_token'])) {
 			header('Location:/agency/account');
 			die;
 		}

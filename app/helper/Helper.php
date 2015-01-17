@@ -20,5 +20,14 @@ class Helper
 		$time[5]=$replace[5];
 		echo $time;
 	}
+	public static function rating($rating,$r=false){
+		$rating=ceil($rating);
+		for ($i=0; $i <$rating ; $i++){ 
+			echo $r?' <i class="sprit-a"></i> ':' <i class="sprit-rating-a"></i> ';
+	    }
+		for ($i=$rating; $i <5 ; $i++) { 
+		echo $r?' <i class="sprit-n"></i> ':' <i class="sprit-rating-n"></i> ';
+		}
+	}
 }
 ?>

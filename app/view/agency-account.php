@@ -86,14 +86,14 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="starheading clearfix">
-									<h4 class="pull-left">Wercitation ullamco laboris</h4>
+									<h4 class="pull-left"><?=$data->data->details->organization?></h4>
 									<div class="starbox pull-left">
-										<i class="sprit-rating-a"></i>
-										<i class="sprit-rating-a"></i>
-										<i class="sprit-rating-a"></i>
-										<i class="sprit-rating-a"></i>
-										<i class="sprit-rating-n"></i>
-										<span>(28)</span>
+									<?php
+									Helper::rating($data->data->ratings->rating);
+									?>
+								
+										
+										<span>(<?=$data->data->ratings->rating_count?>)</span>
 									</div>
 								</div>
 							</div>
@@ -102,32 +102,32 @@
 						<div class="row">
 							<div class="col-md-8">
 								<ul class="adjust my-details">
-									<li class="clearfix"><span>Username:</span><p>username123</p></li>
+									<li class="clearfix"><span>Username:</span><p><?=$data->data->details->username?></p></li>
 									<li class="clearfix">
-									<span>Name:</span> <p>Jesica Jones</p>
+									<span>Name:</span> <p><?=$data->data->details->name?></p>
 									</li>
 									<li class="clearfix">
-									<span>Email:</span> <p>jonesjesica@yahoo.com</p>
+									<span>Email:</span> <p><?=$data->data->details->email?></p>
 									</li>
 									<li class="clearfix">
-									<span>Mobile:</span> <p>+91123456789 </p>
+									<span>Mobile:</span> <p><?=$data->data->details->mobile?></p>
 									</li>
 									<li class="clearfix">
-									<span>Phone:</span> <p>+2345678</p>
+									<span>Phone:</span> <p><?=$data->data->details->landline?></p>
 									</li>
 									<li class="clearfix">
-									<span>Address:</span> <p>28/1 Floor, Ganga Jamuna, Shakespeare Sarani, West Bengal,</p>
+									<span>Address:</span> <p><?=$data->data->details->address.', '.$data->data->details->area.', '.$data->data->details->city.', '.$data->data->details->state.',PIN- '.$data->data->details->pin?></p>
 									</li>
 								</ul>
 							</div>
 							<div class="col-md-4">
 								<ul class="agency my-details">
-									<li class="clearfix"><span>member since:</span><small>21-Dec-2014</small></li>
+									<li class="clearfix"><span>member since: </span><small> <?=date("d-M-Y", strtotime($data->data->details->created_at));?></small></li>
 									<li class="clearfix">
-									<span>total vehicle:</span> <small>12</small>
+									<span>total vehicle:</span> <small><?=$data->data->count->vehicles?></small>
 									</li>
 									<li class="clearfix">
-									<span>total drivers:</span> <small>14</small>
+									<span>total drivers:</span> <small><?=$data->data->count->drivers?></small>
 									</li>
 								</ul>
 							</div>
@@ -148,33 +148,29 @@
 				<div class="col-md-8 col-sm-8">
 					<ul class="tab-bar clearfix">
 						<li class="last active"><a href="#">Current Orders</a><span class="tsprit-nor"></span></li>
-						<li><a href="#">Order History</a></li>
+						<li><a href="#">Order History</a><span class="tsprit-nor"></span></li>
+						<li class="last"><a href="#">All Comments</a></li>
 					</ul>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="width-adjust sortbox pull-right">
-						<form action="#" method="post">
-							<select>
-								<option>Sort by:</option>
-								<option>Sort by:</option>
-								<option>Sort by:</option>
-							</select>
-						</form>
-					</div>
 				</div>
 			</div>
 			<!--currntbox end-->
 
 			<div class="orderrow1 active">
 				<ul class="order-row">
-					<li> <span class="number">1</span>
-						<p class="active">PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail" style="display:block">
+
+
+				<?php 
+				foreach ($data->data->current_order as $key => $value) { ?>
+						
+
+					<li> <span class="<?php echo $value->d_id?'number numberbg-n':'number'?>"><?=$key+1?></span>
+						<p class="active"><?=$value->id.' '.$value->origin.' '.$value->destination.' '.date("d-M-Y", strtotime($value->start)).' '.date("d-M-Y", strtotime($value->end)).' '.$value->model.' '.strtoupper($value->number)?></p>
+						<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 							<div class="col-md-3 col-sm-3">
 								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
+									<img src="http://10.0.0.230/<?=$value->photo1?>" alt="" title="<?=$value->model?>">
 									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
+										<span><small><?=$value->model?></small></span>
 									</div>
 								</div>
 							</div>
@@ -185,31 +181,31 @@
 										<ul class="booking-details">
 											<li class="clearfix">
 												<span>From City:</span>
-												<small>Delhi</small>
+												<small id="from_<?=$value->id?>"><?=$value->origin?></small>
 											</li>
 											<li class="clearfix">
 												<span>Starting Date:</span>
-												<small>21/10/2014</small>
+												<small><?=date("d-M-Y", strtotime($value->start))?></small>
 											</li>
 											<li class="clearfix">
 												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
+												<small><?=$value->model?></small>
 											</li>
 											<li class="clearfix">
 												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
+												<small><?=$value->name?></small>
 											</li>
 											<li class="clearfix">
 												<span>Mobile:</span>
-												<small>+91123456789</small>
+												<small><?=$value->mobile?></small>
 											</li>
 											<li class="clearfix">
 												<span>Pickup Address:</span>
-												<address>281/1 Floor, Ganga Jamuna, West Bengal, Kolkata-700122</address>
+												<address><?=$value->address.', '.$value->area.', '.$value->city.', '.$value->state.',PIN- '.$value->pin?></address>
 											</li>
 											<li class="clearfix">
 												<span>Advance Paid:</span>
-												<small>INR 2097.41</small>
+												<small><?=$value->advance?></small>
 											</li>
 
 										</ul>
@@ -218,224 +214,62 @@
 										<ul class="booking-details">
 											<li class="clearfix">
 												<span>To City:</span>
-												<small>Mumbai</small>
+												<small><?=$value->destination?></small>
 											</li>
 											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
+												<span>End Date:</span>
+												<small><?=date("d-M-Y", strtotime($value->end))?></small>
+												<input type="hidden" id="end_<?=$value->id?>" value="<?=$value->end?>">
 											</li>
 												<li class="clearfix">
 												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
-											</li>
-											<li class="clearfix">
-												<span>Agency Name:</span>
-												<small>Lorem ipsum Agency</small>
+												<small><?=$value->number?></small>
 											</li>
 											<li class="clearfix">
 												<span>Email:</span>
-												<small>banerjeerakesh@gmail.com</small>
+												<small><?=$value->email?></small>
 											</li>
 											<li class="clearfix">
 												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
+												<small><?=$value->pickup_time?></small>
 											</li>
 											<li class="clearfix">
 												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
+												<small><?=$value->id?></small>
 											</li>
 											<li class="clearfix">
 												<span>Remaining:</span>
-												<small>INR 8998.81</small>
+												<small><?=$value->price-$value->advance?></small>
 											</li>
 										</ul>
 									</div>
 								</div>
+								<?php if (!$value->d_id) {?>
 								<div class="btn-wrap">		
-									<button class="btn  btn-success btn-disp">dispatch vehicle</button>					
+									<button class="btn  btn-success btn-disp" value="<?=$value->id?>">dispatch vehicle</button>					
 								</div>
+								<?php } ?>
 							</div>
 						</div>
 						<!--order-detail end-->
 					</li>
-					<li> <span class="number">2</span>
-						<p>PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail">
-							<div class="col-md-3 col-sm-3">
-								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
-									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-9 col-sm-9">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>From City:</span>
-												<small>Delhi</small>
-											</li>
-											<li class="clearfix">
-												<span>Starting Date:</span>
-												<small>21/10/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
-											</li>
-											<li class="clearfix">
-												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
-											</li>
-											<li class="clearfix">
-												<span>Mobile:</span>
-												<small>+91123456789</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Address:</span>
-												<address>281/1 Floor, Ganga Jamuna, West Bengal, Kolkata-700122</address>
-											</li>
-											<li class="clearfix">
-												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>To City:</span>
-												<small>Mumbai</small>
-											</li>
-											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Agency Name:</span>
-												<small>Lorem ipsum Agency</small>
-											</li>
-											<li class="clearfix">
-												<span>Email:</span>
-												<small>banerjeerakesh@gmail.com</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
-											</li>
-											<li class="clearfix">
-												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="btn-wrap">		
-									<button class="btn  btn-success btn-disp">dispatch vehicle</button>			
-								</div>
-							</div>
-						</div>
-						<!--order-detail end-->
-					</li>
-					<li> <span class="number">3</span>
-						<p>PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail">
-							<div class="col-md-3 col-sm-3">
-								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
-									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-9 col-sm-9">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>From City:</span>
-												<small>Delhi</small>
-											</li>
-											<li class="clearfix">
-												<span>Starting Date:</span>
-												<small>21/10/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
-											</li>
-											<li class="clearfix">
-												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
-											</li>
-											<li class="clearfix">
-												<span>Mobile:</span>
-												<small>+91123456789</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Address:</span>
-												<address>281/1 Floor, Ganga Jamuna, West Bengal, Kolkata-700122</address>
-											</li>
-											<li class="clearfix">
-												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>To City:</span>
-												<small>Mumbai</small>
-											</li>
-											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Agency Name:</span>
-												<small>Lorem ipsum Agency</small>
-											</li>
-											<li class="clearfix">
-												<span>Email:</span>
-												<small>banerjeerakesh@gmail.com</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
-											</li>
-											<li class="clearfix">
-												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="btn-wrap">			
-									<button class="btn  btn-success btn-disp">dispatch vehicle</button>	
-								</div>
-							</div>
-						</div>
-						<!--order-detail end-->
-					</li>
+					<?php } ?>
 				</ul>
 				<!--order-row end-->
 			</div>
 
 			<div class="orderrow1">
 				<ul class="order-row">
-					<li>
-						<p class="active">PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail" style="display:block">
+				<?php 
+				foreach ($data->data->order_history as $key => $value) { ?>
+					<li><span class="number numberbg-n"><?=$key+1?></span>
+						<p class="active"><?=$value->id.' '.$value->origin.' '.$value->destination.' '.date("d-M-Y", strtotime($value->start)).' '.date("d-M-Y", strtotime($value->end)).' '.$value->model.' '.strtoupper($value->number)?></p>
+						<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 							<div class="col-md-3 col-sm-3">
 								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
+									<img src="http://10.0.0.230/<?=$value->photo1?>" alt="" title="<?=$value->model?>">
 									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
+										<span><small><?=$value->model?></small></span>
 									</div>
 								</div>
 							</div>
@@ -446,27 +280,27 @@
 										<ul class="booking-details">
 											<li class="clearfix">
 												<span>From City:</span>
-												<small>Delhi</small>
+												<small><?=$value->origin?></small>
 											</li>
 											<li class="clearfix">
 												<span>Starting Date:</span>
-												<small>21/10/2014</small>
+												<small><?=date("d-M-Y", strtotime($value->start))?></small>
 											</li>
 											<li class="clearfix">
 												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
+												<small><?=$value->model?></small>
 											</li>
 											<li class="clearfix">
 												<span>Driver:</span>
-												<small>Ram Kumar Singh</small>
+												<small><?=$value->driver_name?></small>
 											</li>
 											<li class="clearfix">
 												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
+												<small><?=$value->name?></small>
 											</li>
 											<li class="clearfix">
 												<span>Paid:</span>
-												<small>INR 9078.21</small>
+												<small><?=$value->price?></small>
 											</li>
 									
 										</ul>
@@ -475,23 +309,23 @@
 										<ul class="booking-details">
 											<li class="clearfix">
 												<span>To City:</span>
-												<small>Mumbai</small>
+												<small><?=$value->destination?></small>
 											</li>
 											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
+												<span>End Date:</span>
+												<small><?=date("d-M-Y", strtotime($value->end))?></small>
 											</li>
 												<li class="clearfix">
 												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
+												<small><?=$value->number?></small>
 											</li>
 											<li class="clearfix">
 												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
+												<small><?=$value->pickup_time?></small>
 											</li>
 											<li class="clearfix">
 												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
+												<small><?=$value->id?></small>
 											</li>
 									
 										</ul>
@@ -501,383 +335,61 @@
 						</div>
 						<!--order-detail end-->
 					</li>
-					<li>
-						<p>PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail">
-							<div class="col-md-3 col-sm-3">
-								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
-									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-9 col-sm-9">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>From City:</span>
-												<small>Delhi</small>
-											</li>
-											<li class="clearfix">
-												<span>Starting Date:</span>
-												<small>21/10/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
-											</li>
-											<li class="clearfix">
-												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
-											</li>
-											<li class="clearfix">
-												<span>Mobile:</span>
-												<small>+91123456789</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Address:</span>
-												<address>281/1 Floor, Ganga Jamuna, West Bengal, Kolkata-700122</address>
-											</li>
-											<li class="clearfix">
-												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>To City:</span>
-												<small>Mumbai</small>
-											</li>
-											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Agency Name:</span>
-												<small>Lorem ipsum Agency</small>
-											</li>
-											<li class="clearfix">
-												<span>Email:</span>
-												<small>banerjeerakesh@gmail.com</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
-											</li>
-											<li class="clearfix">
-												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--order-detail end-->
-					</li>
-					<li>
-						<p>PM 123 F 235689 Delhi Mumbai 21/10/2014 27/12/2014 Tata Indica DL 1Y 3C 8765</p>
-						<div class="row order-detail">
-							<div class="col-md-3 col-sm-3">
-								<div class="car-sec">
-									<img src="/images/car6.jpg" alt="" title="image">
-									<div class="star-box clearfix">
-										<span><small>Opel Astra</small> or Similar</span>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-md-9 col-sm-9">
-								<div class="row">
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>From City:</span>
-												<small>Delhi</small>
-											</li>
-											<li class="clearfix">
-												<span>Starting Date:</span>
-												<small>21/10/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Vehicle:</span>
-												<small>Toyota Corela</small>
-											</li>
-											<li class="clearfix">
-												<span>Name:</span>
-												<small>Rakesh Banerjee</small>
-											</li>
-											<li class="clearfix">
-												<span>Mobile:</span>
-												<small>+91123456789</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Address:</span>
-												<address>281/1 Floor, Ganga Jamuna, West Bengal, Kolkata-700122</address>
-											</li>
-											<li class="clearfix">
-												<span>Plate Number:</span>
-												<small>DL 1Y 8C 7689</small>
-											</li>
-										</ul>
-									</div>
-									<div class="col-md-6">
-										<ul class="booking-details">
-											<li class="clearfix">
-												<span>To City:</span>
-												<small>Mumbai</small>
-											</li>
-											<li class="clearfix">
-												<span>Duration Date:</span>
-												<small>27/12/2014</small>
-											</li>
-											<li class="clearfix">
-												<span>Agency Name:</span>
-												<small>Lorem ipsum Agency</small>
-											</li>
-											<li class="clearfix">
-												<span>Email:</span>
-												<small>banerjeerakesh@gmail.com</small>
-											</li>
-											<li class="clearfix">
-												<span>Pickup Time:</span>
-												<small>10:30 AM</small>
-											</li>
-											<li class="clearfix">
-												<span>Booking ID:</span>
-												<small>PM 123 F 235689</small>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--order-detail end-->
-					</li>
+				<?php }?>
 				</ul>
 				<!--order-row end-->
 			</div>
-		</div>
-		<!--orderbox end-->
 
-		
-
-		<div class="border-none agency-box">
+			<div class="orderrow1">
+				<div class="border-none agency-box">
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
-					<div class="comment-box clearfix">
-						<h4 class="pull-left">All comments</h4>
+					<div class="comment-box clearfix" style="padding-top:0;">
+						<h4 class="pull-left">All Comments</h4>
 						<div class="starbox pull-left">
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-n"></i>
-							<span>(28)</span>
+							<?php Helper::rating($data->data->ratings->rating)?>
+							<span>(<?=$data->data->ratings->rating_count?>)</span>
 						</div>
 					</div>
 
 					<div class="view-section">
+					<?php foreach ($data->data->feedback as $key => $value) {?>
 						<div class="view-info">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="username">
-										<h5>aditya goyal</h5>
-										<p>Travelled with Mahalaxmi travels on 8th December, 2014</p>
+										<h5><?=$value->name?></h5>
+										<p>Travelled on <?=date("d-M-Y", strtotime($value->start));?></p>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="viewstar pull-right">
 										<ul class="clearfix">
 											<li class="bus">
-												bus quallty 
+												vehicle quallty 
 												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
+													<?php Helper::rating($value->vehicle,1)?>
 												</span>
 											</li>
 											<li class="bus">
-												punctuallty 
+												agency quality 
 												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
+													<?php Helper::rating($value->agency,1)?>
 												</span>
 											</li>
 											<li class="bus">
 												staff behavlour
 												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
+													<?php Helper::rating($value->driver,1)?>
 												</span>
 											</li>
 										</ul>
-										<p>Great agency,driver &amp; car-highly recommended</p>
+										<p><?=$value->message?></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!--VIEW-INFO END-->
-
-						<div class="view-info">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="username">
-										<h5>ayush jain</h5>
-										<p>Travelled with Mahalaxmi travels on 6th December, 2014</p>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="viewstar pull-right">
-										<ul class="clearfix">
-											<li class="bus">
-												bus quallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-												</span>
-											</li>
-											<li class="bus">
-												punctuallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-											<li class="bus">
-												staff behavlour
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-										</ul>
-										<p>Great agency,driver &amp; car-highly recommended</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--VIEW-INFO END-->
-
-						<div class="view-info">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="username">
-										<h5>varidhi sharma</h5>
-										<p>Travelled with Mahalaxmi travels on 1st December, 2014</p>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="viewstar pull-right">
-										<ul class="clearfix">
-											<li class="bus">
-												bus quallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-												</span>
-											</li>
-											<li class="bus">
-												punctuallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-											<li class="bus">
-												staff behavlour
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-										</ul>
-										<p>Great agency,driver &amp; car-highly recommended</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--VIEW-INFO END-->
-
-						<div class="view-info">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="username">
-										<h5>s sharma</h5>
-										<p>Travelled with Mahalaxmi travels on 28 November, 2014</p>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="viewstar pull-right">
-										<ul class="clearfix">
-											<li class="bus">
-												bus quallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-												</span>
-											</li>
-											<li class="bus">
-												punctuallty 
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-											<li class="bus">
-												staff behavlour
-												<span>
-													<i class=sprit-a></i>
-													<i class=sprit-a></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-													<i class=sprit-n></i>
-												</span>
-											</li>
-										</ul>
-										<p>Great agency,driver &amp; car-highly recommended</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--VIEW-INFO END-->
+					<?php }?>
 					</div>
 					<!--view-section end-->
 
@@ -885,6 +397,13 @@
 			</div>
 		</div>
 		<!--agency-box end-->
+			</div>
+		</div>
+		<!--orderbox end-->
+
+		
+
+		
 
 	</div>
 	<!--container end-->
@@ -940,8 +459,24 @@
 <!--footer end-->
 </div>
 <!--WRAPPER END-->
-
-
+<!--POPUP-->
+<div class="overlay"></div>
+<div class="dispatch-row">
+	<div class="dispatch-box">
+		<span>Tata Indica DL 1Y 3C 8765</span>
+		<form action="#" method="post">
+			<div class="sort-row">
+				<select>
+					<option>Sort by:</option>
+					<option>Sort by:</option>
+					<option>Sort by:</option>
+				</select>
+			</div>
+			<button class="btn btn-success btn-pare">Pare dispatch</button>
+		</form>
+	</div>
+</div>
+<!--POPUP END-->
 
 <!--jquery libraries-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -967,29 +502,8 @@
 <script type="text/javascript" src="/js/custom.js"></script>
 
 <script type="text/javascript">
+	var a_token=<?='\''.$_SESSION['a_token'].'\''?>;
 	$(document).ready(function(){
-		 $( "#slider-range" ).slider({
-			range: true,
-			min: 0,
-			max: 7799,
-			values: [ 500, 7799 ],
-			slide: function( event, ui ) {
-			$( "#amount" ).val($("<div>").html("&#x20B9;").text() + ui.values[ 0 ] +'   '+$("<div>").html("&#x20B9;")
-				.text() + ui.values[ 1 ] );
-			}
-			});
-			$( "#amount" ).val($("<div>").html("&#x20B9;").text() + $( "#slider-range" ).slider( "values", 0 ) 
-				+'   '+
-			$("<div>").html("&#x20B9;").text() + $( "#slider-range" ).slider( "values", 1 ) );
-		//RANGE SLIDER END
-
-		// SEARCH PAGE SLIDE SHOW
-		$('.result-info').click(function(){
-			$(this).find('i').toggleClass('active');
-			$(this).next().slideToggle();	
-		});
-
-		//
 		$('.order-row li p').click(function(){
 			if ($(this).next('.order-detail').is(':visible')) {
 				$(this).next('.order-detail').slideUp();
@@ -1010,6 +524,23 @@
 			$('.orderrow1:eq('+num+')').slideDown().siblings('.orderrow1').slideUp();
 			return false
 		});
+		var lefta =($(window).width()-$('.dispatch-row').width())/2,
+			topa = ($(window).height()-$('.dispatch-row').height())/2;
+
+			$('.btn-disp').click(function(){
+				var id=$(this).val();
+				$('.dispatch-row').css({left:lefta, top:topa}).fadeIn();
+				$('.overlay').fadeIn();
+				alert($('#end_'+id).val());
+			});
+
+		 $("body").mouseup(function(e){
+	        var subject = $(".dispatch-row, .overlay"); 
+	        if(e.target.class != subject.attr('class') && !subject.has(e.target).length)
+	        { 
+	            subject.fadeOut();
+	        }
+	    });
 
 	});
 </script>

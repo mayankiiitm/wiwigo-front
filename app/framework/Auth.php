@@ -25,20 +25,19 @@ class Auth
             $curl=new curl;
             $data=$curl->get('http://10.0.0.230/agency/details?access_token='.$token);
             $details=json_decode($data->text);
-            echo 1;
             return $details;
         }
-        if (isset($_SESSION['a_token'])) {
-            echo 2;
+        if(isset($_COOKIE['a_token'])){
+            $token=$_COOKIE['a_token'];
             $curl=new curl;
-            $data=$curl->get('http://10.0.0.230/agency/details?access_token='.$_SESSION['a_token']);
+            $data=$curl->get('http://10.0.0.230/agency/details?access_token='.$token);
             $details=json_decode($data->text);
             if ($details->error[0]==401) {
-                echo 3;
-                $data1=$curl->post('http://10.0.0.230/agency/refresh?access_token='.$_SESSION['a_token']);
+                $data1=$curl->post('http://10.0.0.230/agency/refresh?access_token='.$token);
                 $data2=json_decode($data1->text);
                 $data3=$curl->get('http://10.0.0.230/agency/details?access_token='.$data2->data->access_token);
                 $_SESSION['a_token']=$data2->data->access_token;
+                setcookie('a_token',$data2->data->access_token,time()+3600*24*365);
                 $details1=json_decode($data3->text);
                 return $details1;
             }

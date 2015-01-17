@@ -676,7 +676,7 @@ aside{
 	width: 33%;
 }
 .tab-bar li.last{
-	width: 35%;
+	width: 33%;
 }
 .tab-bar li a{
 	display: block;
@@ -1478,6 +1478,31 @@ POPUP CSS HERE
 	top:-6px;
 	z-index:503;
 	cursor: pointer;
+}
+
+.dispatch-row{
+	width: 230px;
+	position: fixed;
+	z-index: 501;
+	background: #fff;
+	display: none;
+	box-sizing: border-box;
+}
+.dispatch-row .dispatch-box{
+	padding: 15px;
+}
+.dispatch-row .dispatch-box > span{
+	text-transform: capitalize;
+	font-weight: 400;
+	display: block;
+	padding-bottom: 10px;
+}
+.dispatch-row .dispatch-box .sort-row{
+	padding-bottom: 10px;
+}
+.dispatch-row .btn-pare{
+	text-transform:uppercase;
+	font-weight: 300;
 }
 
 /*
@@ -2377,9 +2402,9 @@ AGENCY ACCOUNT
 .order-row{
 	padding-left: 0;
 }
-.order-row > li{
-	border-bottom:1px solid #dcdcdc;
-	margin-bottom: 15px;
+.order-row > li+li{
+	border-top:1px solid #dcdcdc;
+	padding-top: 15px;
 }
 
 .number{
@@ -2392,6 +2417,11 @@ AGENCY ACCOUNT
 	line-height: 20px;
 	font-size: 14px;
 	text-align: center;
+	font-weight: 400;
+}
+.numberbg-n{
+	background: none;
+	color:#000;
 }
 
  .order-row p{
