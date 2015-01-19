@@ -219,7 +219,6 @@
 											<li class="clearfix">
 												<span>End Date:</span>
 												<small><?=date("d-M-Y", strtotime($value->end))?></small>
-												<input type="hidden" id="end_<?=$value->id?>" value="<?=$value->end?>">
 											</li>
 												<li class="clearfix">
 												<span>Plate Number:</span>
@@ -246,7 +245,7 @@
 								</div>
 								<?php if (!$value->d_id) {?>
 								<div class="btn-wrap">		
-									<button class="btn  btn-success btn-disp" value="<?=$value->id?>">dispatch vehicle</button>					
+									<button class="btn  btn-success btn-disp" value="start=<?=$value->start?>&end=<?=$value->end?>">dispatch vehicle</button>					
 								</div>
 								<?php } ?>
 							</div>
@@ -407,6 +406,7 @@
 
 	</div>
 	<!--container end-->
+	<input type="hidden" name="access_token" value="<?=$_SESSION['a_token']?>">
 </div>
 <!--content end-->
 
@@ -465,12 +465,7 @@
 	<div class="dispatch-box">
 		<span>Tata Indica DL 1Y 3C 8765</span>
 		<form action="#" method="post">
-			<div class="sort-row">
-				<select>
-					<option>Sort by:</option>
-					<option>Sort by:</option>
-					<option>Sort by:</option>
-				</select>
+			<div class="sort-row" id="driver-select">
 			</div>
 			<button class="btn btn-success btn-pare">Pare dispatch</button>
 		</form>
@@ -501,8 +496,9 @@
 <!--Custom-->
 <script type="text/javascript" src="/js/custom.js"></script>
 
+<script type="text/javascript" src="/js/cookie.js"></script>
+
 <script type="text/javascript">
-	var a_token=<?='\''.$_SESSION['a_token'].'\''?>;
 	$(document).ready(function(){
 		$('.order-row li p').click(function(){
 			if ($(this).next('.order-detail').is(':visible')) {
@@ -522,16 +518,32 @@
 			var num = $(this).index();
 			$(this).addClass('active').siblings().removeClass('active');
 			$('.orderrow1:eq('+num+')').slideDown().siblings('.orderrow1').slideUp();
-			return false
+			return false;
 		});
 		var lefta =($(window).width()-$('.dispatch-row').width())/2,
 			topa = ($(window).height()-$('.dispatch-row').height())/2;
 
 			$('.btn-disp').click(function(){
-				var id=$(this).val();
+				var btn=$(this);
 				$('.dispatch-row').css({left:lefta, top:topa}).fadeIn();
 				$('.overlay').fadeIn();
-				alert($('#end_'+id).val());
+				var url='http://10.0.0.230/agency/drivers/available?access_token='+$('input[name=access_token]').val()+'&'+$(this).val();
+				$.get(url,function(res){
+					result=$.parseJSON(res);
+					if (result.error[0]=='401') {
+						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+							response=$.parseJSON(data);
+							$.cookie('atoken',response.data.access_token);
+							$('input[name=access_token]').val(response.data.access_token);
+							btn.trigger("click");
+						});
+					}else if (result.success=='1') {
+						var options='';
+						$.each(result.data,function(key, value){options+="<option value='"+value.id+"'>"+value.name+"</option>"});
+						$("#driver-select").append("<select>"+options+"</select>");
+					}
+
+				});
 			});
 
 		 $("body").mouseup(function(e){

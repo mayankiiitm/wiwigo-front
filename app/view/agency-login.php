@@ -183,7 +183,7 @@ $('form').submit(function(e){
         type: 'POST'
     }).done(function(data){
 		result=$.parseJSON(data);
-		if (result.error[0]=='401') {
+		if (result.error[0]=='401'){
 			$.ajax({
 				url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
 				type:'GET',
