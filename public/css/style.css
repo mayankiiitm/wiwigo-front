@@ -2070,7 +2070,18 @@ Agency Registration
 
 .vehicle-checkbox{
 	padding-bottom: 10px;
+
 }
+
+.vehicle-checkbox .checkbox{
+	float: left;
+}
+
+.vehicle-checkbox .checkbox{
+	padding-right: 20px;
+}
+
+
 .addition.agency-registration .checkbox{
 	padding-bottom: 0;
 }

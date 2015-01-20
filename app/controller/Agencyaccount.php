@@ -20,5 +20,14 @@ class Agencyaccount
 		$this->data->data->order_history=json_decode($data1->text)->data;
 		View::make('agency-account',$this->data);
 	}
+	public function adddriver(){
+		View::make('add-driver',$this->data);
+	}
+	public function addvehicle(){
+		$curl=new curl;
+		$data=$curl->get('http://10.0.0.230/term/cars');
+		$this->data->data->cars=json_decode($data->text)->data;
+		View::make('add-vehicle',$this->data);
+	}
 }
 ?>

@@ -41,6 +41,7 @@ class Auth
                 $details1=json_decode($data3->text);
                 return $details1;
             }
+            $_SESSION['a_token']=$token;
             return $details;
         }
     }

@@ -134,8 +134,8 @@
 						</div>
 						
 						<div class="btn-wrap">
-							<button class="btn  btn-success current-btn">add vehicle</button>
-							<button class="btn btn-secondry cancel-btn">add driver</button>
+							<a href="/agency/addvehicle"><button class="btn  btn-success current-btn">add vehicle</button></a>
+							<a href="/agency/adddriver"><button class="btn btn-secondry cancel-btn">add driver</button></a>
 						</div>
 					</div>
 				</div>
@@ -245,7 +245,8 @@
 								</div>
 								<?php if (!$value->d_id) {?>
 								<div class="btn-wrap">		
-									<button class="btn  btn-success btn-disp" value="start=<?=$value->start?>&end=<?=$value->end?>">dispatch vehicle</button>					
+									<button class="btn  btn-success btn-disp" value="start=<?=$value->start?>&end=<?=$value->end?>">dispatch vehicle</button>
+									<input type="hidden" id="b_<?=$value->id?>" value="<?=$value->id?>">					
 								</div>
 								<?php } ?>
 							</div>
@@ -463,11 +464,11 @@
 <div class="overlay"></div>
 <div class="dispatch-row">
 	<div class="dispatch-box">
-		<span>Tata Indica DL 1Y 3C 8765</span>
+		<span>Dispatch Vehicles</span>
 		<form action="#" method="post">
 			<div class="sort-row" id="driver-select">
 			</div>
-			<button class="btn btn-success btn-pare">Pare dispatch</button>
+			<button class="btn btn-success btn-pare" id="paredriver" disabled="true"></button>
 		</form>
 	</div>
 </div>
@@ -524,7 +525,10 @@
 			topa = ($(window).height()-$('.dispatch-row').height())/2;
 
 			$('.btn-disp').click(function(){
+				$("#paredriver").attr("disabled","disabled").text("Loading Drivers...");
 				var btn=$(this);
+				btn.attr("id","current");
+				var id=$(this).next('input').val();
 				$('.dispatch-row').css({left:lefta, top:topa}).fadeIn();
 				$('.overlay').fadeIn();
 				var url='http://10.0.0.230/agency/drivers/available?access_token='+$('input[name=access_token]').val()+'&'+$(this).val();
@@ -540,7 +544,8 @@
 					}else if (result.success=='1') {
 						var options='';
 						$.each(result.data,function(key, value){options+="<option value='"+value.id+"'>"+value.name+"</option>"});
-						$("#driver-select").append("<select>"+options+"</select>");
+						$("#driver-select").html("<select id='d_id'>"+options+"</select>").append("<input type='hidden' value='"+id+"'>");
+						$("#paredriver").removeAttr("disabled").text("PARE DRIVER");
 					}
 
 				});
@@ -553,6 +558,33 @@
 	            subject.fadeOut();
 	        }
 	    });
+
+
+		$("#paredriver").click(function(e){
+			e.preventDefault();
+			var b_id=$("#driver-select").find('input').val();
+			$(this).attr("disabled","disabled").text('Dispatching...');
+			var cur=$(this);
+			$.ajax({
+				url:'http://10.0.0.230/agency/dispatch/'+b_id+'?access_token='+$('input[name=access_token]').val(),
+				type:'POST',
+				data:'d_id='+$("#d_id").val(),
+				success:function(res){
+					result=$.parseJSON(res);
+					if (result.error[0]=='401') {
+						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+							response=$.parseJSON(data);
+							$.cookie('atoken',response.data.access_token);
+							$('input[name=access_token]').val(response.data.access_token);
+							cur.trigger("click");
+						});
+					}else{
+						cur.text('dispatched');
+						$("#current").removeAttr("id");
+					}
+				}
+			});
+		});
 
 	});
 </script>
