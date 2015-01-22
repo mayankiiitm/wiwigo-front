@@ -6,7 +6,7 @@ class Test
 {
 	function home(){
 		
-	View::make('home');
+	View::make('test');
 }
 }
 ?>

@@ -50,11 +50,11 @@
 							<form action="" method="post" enctype="multipart/form-data" id="form1">
 								<ul class="registran clearfix">
 									
-									<li class="pull-left"><input type="text" name="number" placeholder="Plate Number"></li>
+									<li class="pull-left"><input type="text" name="number" placeholder="Plate Number" data-parsley-required="true" data-parsley-error-message="Plate Number is required"></li>
 				
-									<li class="pull-right"><input type="text" name="year" placeholder="Year"></li>
+									<li class="pull-right"><input type="text" name="year" placeholder="Year" data-parsley-required="true" data-parsley-error-message="Make Year is required"></li>
 
-									<li class="pull-left"><input type="text" name="seats" placeholder="Number of seats available:5"></li>
+									<li class="pull-left"><input type="text" name="seats" placeholder="Number of seats available:5" data-parsley-required="true" data-parsley-error-message="Number of seats is required"></li>
 
 									<li class="pull-right">
 										<select name="model" id="model">
@@ -63,11 +63,12 @@
 												<option value="<?=$value->id?>"><?=$value->model?></option>
 											<?php }?>
 										</select>
+										<span class="error-block" id="model-error">Please Select Model</span>
 									</li>
 
-									<li class="clearboth"><input type="text" name="rpk" placeholder="Rate Per km."></li>
+									<li class="clearboth"><input type="text" name="rpk" placeholder="Rate Per km." data-parsley-required="true" data-parsley-error-message="Rate per KM is required"></li>
 
-									<li><input type="text" name="ta" placeholder="TA/DA Per Day"></li>								
+									<li><input type="text" name="ta" placeholder="TA/DA Per Day" data-parsley-required="true" data-parsley-error-message="TA/DA per day is required"></li>								
 								</ul>
 
 								<div class="check-row vehicle-checkbox clearfix">
@@ -200,7 +201,10 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		alert($("#model").val());
+		$("#model").change(function(){
+			$("#model-error").hide();
+		});
+		$("#submit").click(function(){if ($("#model").val()<=0) {$("#model-error").show()};});
 		$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
 		$('form').submit(function(e){
 			var form=$(this);

@@ -705,6 +705,10 @@ aside{
 .tab-bar li:hover, .tab-bar li.active{
 	background: #ff6100;
 }
+
+.tab-bar li.disable:hover{
+	background:#3E3E3E;
+}
 .tab-bar li:hover .tsprit-nor, .tab-bar li.active .tsprit-nor{
 	background-position: 0 -51px;
 } 
@@ -2823,4 +2827,9 @@ Loder css
 	background: url(../images/animation.gif) left top no-repeat;
 	background-size:40px;
 	height:75px; 
+}
+
+
+.disable{
+
 }
