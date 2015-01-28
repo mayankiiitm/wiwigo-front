@@ -1,60 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Book Outstation Cab Rental</title>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/css/style.css">
- <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="/css/all-ie.css">
- <![endif]-->
-</head>
-<body>
-<div id="wrapper">
-<header>
- 	<div class="container">
-	 <div class="row">
-	  <div class="col-md-2 col-sm-2">
-	  		<a href="index.html" class="logo"><img src="/images/logo.png" alt="" title="Welcome To Wiwigo"></a>
-	  </div>
-	  <div class="col-md-10 col-sm-10">
-	  	<ul class="help pull-right clearfix">
-	  		<li class="call">Booking: <a href="tel+1234-5678-9821">1800 12345 789</a></li>
-	  		<li class="sine-in"><span>login</span></li>
-	  		<li class="sine-in last"><span>sign up</span></li>
-	  	</ul>
-	  </div>
-	 </div>
- 	</div>
-</header>
-<!--HEADER END-->
-<div class="banner agency-account">		
-	<div class="container">
-		<div class="ficaption"><h1>Frnventore veritatis et qhere</h1></div>
-	</div>	
-</div>
-<!--BANNER END-->
-
+<?php require_once 'agency-header.php';?>
 <div class="content">
 	<div class="container">
 		<div class="agency-box">
 			<div class="row">
 				<div class="col-md-8 col-sm-8">
 					<div class="heading-two"><h2>Agency Account</h2></div>
-				</div>
-				<div class="col-md-4 col-sm-4">
-					<div class="width-adjust sortbox pull-right">
-						<form action="#" method="post">
-							<select>
-								<option>Sort by:</option>
-								<option>Sort by:</option>
-								<option>Sort by:</option>
-							</select>
-						</form>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -66,12 +16,9 @@
 					<div class="car-sec">
 						<img src="/images/car6.jpg" alt="" title="image">
 						<div class="star-box clearfix">
-							<span><small>Opel Astra</small> or Similar</span>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-a"></i>
-							<i class="sprit-rating-n"></i>
+							<?php
+							Helper::rating($data->data->ratings->rating);
+							?>
 						</div>
 					</div>
 					<ul class="image-view clearfix">
@@ -116,7 +63,7 @@
 									<span>Phone:</span> <p><?=$data->data->details->landline?></p>
 									</li>
 									<li class="clearfix">
-									<span>Address:</span> <p><?=$data->data->details->address.', '.$data->data->details->area.', '.$data->data->details->city.', '.$data->data->details->state.',PIN- '.$data->data->details->pin?></p>
+									<span>Address:</span> <p><?=$data->data->details->address.', '.$data->data->details->area.', '.$data->data->details->city.', '.$data->data->details->state_name.',PIN- '.$data->data->details->pin?></p>
 									</li>
 								</ul>
 							</div>
@@ -410,57 +357,8 @@
 	<input type="hidden" name="access_token" value="<?=$_SESSION['a_token']?>">
 </div>
 <!--content end-->
-
-<!--footer start-->
-<footer>
-	<div class="container">
-		<div class="row footer-inner">
-			<div class="col-md-8 col-sm-8">
-				<nav class="nav-primary">
-					<ul class="clearfix">
-						<li><a href="#">About</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Career</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-						<li><a href="#">Cancellation &amp; Refund Policy </a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
-				</nav>
-				<nav class="nav-secondry">
-					<ul class="clearfix">
-						<li><a href="#">Agency Registration</a></li>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Contact Us</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2">
-				<div class="social">
-					<ul class="clearfix">
-						<li><a href="https://facebook.com/" target="_new" title="facebook"><i class="sprit-fb"></i></a></li>
-						<li><a href="https://twitter.com/" target="_new" title="Twitter"><i class="sprit-twi"></i></a></li>
-						<li><a href="https://plus.google.com" traget="_new" title="Google Plus" target="_new"><i class="sprit-goolge"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row copyright-box">
-			<div class="col-md-8 col-sm-8">
-				<div class="copyright pull-right">
-					<p>Copyright © Wiwigo. All Rights Reserved.</p>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<span class="racspase-logo pull-right"><img src="/images/rackspace.png" alt="" title=""></span>
-			</div>
-		</div>
-	</div>
-</footer>
-<!--footer end-->
 </div>
-<!--WRAPPER END-->
-<!--POPUP-->
+<!--footer start-->
 <div class="overlay"></div>
 <div class="dispatch-row">
 	<div class="dispatch-box">
@@ -472,32 +370,7 @@
 		</form>
 	</div>
 </div>
-<!--POPUP END-->
-
-<!--jquery libraries-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/jquery-1.11.1.min.js"><\/script>')</script>
-
-<!--jqueryui plugin-->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script>window.jQuery.ui || document.write('<script src="/js/jquery-ui.min.js"><\/script>')</script>
-
-<!--Custome selectbox plugin-->
-<script type="text/javascript" src="/js/jquery.fs.selecter.js"></script>
-
-<!--Boostrap plugin-->
-<script type="text/javascript" src="/js/bootstrap.js"></script>
-
-<!--flexslider plugin-->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
-
-<!--datetimepicker plugin-->
-<script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
-
-<!--Custom-->
-<script type="text/javascript" src="/js/custom.js"></script>
-
-<script type="text/javascript" src="/js/cookie.js"></script>
+<?php require_once 'agency-footer.php';?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -588,7 +461,5 @@
 
 	});
 </script>
-
-
 </body>
 </html>

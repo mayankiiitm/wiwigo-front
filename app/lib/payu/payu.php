@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Returns the pay page url or the merchant js file.
  * 

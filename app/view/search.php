@@ -9,7 +9,7 @@
  <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="css/all-ie.css">
+      <link rel="stylesheet" type="text/css" href="/css/all-ie.css">
  <![endif]-->
 </head>
 <body>
@@ -75,7 +75,7 @@
 
 							<div class="map-row">
 								<div class="google-map">
-									<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBICRrFApIhKTUtwMsKQP3ITV-kmsqOC-g&origin=<?=$_GET['from']?>&destination=<?=$_GET['to']?>"></iframe>
+									<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCWU5OJnKeeiPo8VQ16BWCJrDvxw294VRw&origin=<?=$_GET['from']?>&destination=<?=$_GET['to']?>"></iframe>
 								</div>
 								<div class="distance">
 									<span>total distance</span>
@@ -275,13 +275,7 @@
 								<div id="slider<?=$slider++?>" class="flexslider">
 								  <ul class="slides">
 								  <?php 
-								  $ses=$value;
-								  $ses->from=$_GET['from'];
-								  $ses->to=$_GET['to'];
-								  $ses->start=$_GET['start'];
-								  $ses->end=$_GET['end'];
-	
-								  $_SESSION["'".$value->id."'"]=json_encode($ses);
+								  $ses[]=$value;
 								  	if ($value->photo1) { ?>
 								  		<li><img src="http://10.0.0.230/<?=$value->photo1?>"></li>
 								  	<?php } ?>
@@ -305,7 +299,13 @@
 								  <?php 
 								  	if ($value->photo6) { ?>
 								  		<li><img src="http://10.0.0.230/<?=$value->photo6?>"></li>
-								  	<?php } ?>
+								  	<?php } 
+								  	$res['search']=$ses;
+								    $res['from']=$_GET['from'];
+								    $res['to']=$_GET['to'];
+								    $res['start']=$_GET['start'];
+								    $res['end']=$_GET['end'];
+								  	$_SESSION['search']=json_encode($res); ?>
 		
 								  </ul>
 								  <div class="star-box">
@@ -445,7 +445,7 @@
 										<div class="col-md-4 col-sm-12">
 											<div class="paybox">
 												<div class="paytext">
-													<span>inr2097.32<small class="showpay">?</small></span>
+													<span>inr<?=ceil($value->price/5)?><small class="showpay">?</small></span>
 													<div class="payview">
 														<p>Pay 20% now to book cab rental and pay
 														 remaining 80% to driver</p>
@@ -455,7 +455,7 @@
 											</div>
 										</div>
 										<div class="col-md-8 col-sm-6">
-											<a href="/booking?id=<?=$value->id?>"><button class="btn  btn-success btn-book">book now!</button>
+											<a href="/booking?id=<?=$value->id?>"><button class="btn  btn-success btn-book">book now!</button></a>
 										</div>
 									</div>
 								</div>
@@ -512,55 +512,7 @@
 <!--WRAPPER END-->
 
 <!--footer start-->
-<footer>
-	<div class="container">
-		<div class="row footer-inner">
-			<div class="col-md-8 col-sm-8">
-				<nav class="nav-primary">
-					<ul class="clearfix">
-						<li><a href="#">About</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Career</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-						<li><a href="#">Cancellation &amp; Refund Policy </a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
-				</nav>
-				<nav class="nav-secondry">
-					<ul class="clearfix">
-						<li><a href="#">Agency Registration</a></li>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Contact Us</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2">
-				<div class="social">
-					<ul class="clearfix">
-						<li><a href="https://facebook.com/" target="_new" title="facebook"><i class="sprit-fb"></i></a></li>
-						<li><a href="https://twitter.com/" target="_new" title="Twitter"><i class="sprit-twi"></i></a></li>
-						<li><a href="https://plus.google.com" traget="_new" title="Google Plus" target="_new"><i class="sprit-goolge"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row copyright-box">
-			<div class="col-md-8 col-sm-8">
-				<div class="copyright pull-right">
-					<p>Copyright © Wiwigo. All Rights Reserved.</p>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<span class="racspase-logo pull-right"><img src="/images/rackspace.png" alt="" title=""></span>
-			</div>
-		</div>
-	</div>
-</footer>
-<!--footer end-->
-
-
-<div class="overlay"></div>
+<?php require_once 'userl-footer.php';?>
 <div class="login-box">
 	<div class="review-popup">
 		<div class="container">
@@ -812,32 +764,6 @@
 	</div>
 	<!--review-popup end-->
 </div>
-<!--login-box-->
-
-
-<!--jquery libraries-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/jquery-1.11.1.min.js"><\/script>')</script>
-
-<!--jqueryui plugin-->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script>window.jQuery.ui || document.write('<script src="/js/jquery-ui.min.js"><\/script>')</script>
-
-<!--Custome selectbox plugin-->
-<script type="text/javascript" src="/js/jquery.fs.selecter.js"></script>
-
-<!--Boostrap plugin-->
-<script type="text/javascript" src="/js/bootstrap.js"></script>
-
-<!--flexslider plugin-->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
-
-<!--datetimepicker plugin-->
-<script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
-
-<!--Custom-->
-<script type="text/javascript" src="/js/custom.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		 $( "#slider-range" ).slider({

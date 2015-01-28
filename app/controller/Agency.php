@@ -15,7 +15,7 @@ class Agency
 		View::make('agency-register');
 	}
 	public function login(){
-		View::make('agency-login');  
+		View::make('agency-login');
 	}
 }
 ?>

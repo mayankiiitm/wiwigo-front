@@ -7,7 +7,7 @@ class Model
 	 protected $db;
 	 public $error;
 	 public $count;
-	 function __construct(){
+	 function __construct($table=null){
 	 	$this->db=DB::getInstance();
 	}
 
@@ -23,11 +23,14 @@ class Model
 		return false;
 	}
 
-	public function insert(Array $details){
+	public function insert(Array $details,$table=null){
 		$keys=array_keys($details);
 		$column='('.implode(',', $keys).')';
 		$values='(:'.implode(',:',$keys).')';
 		$sql='INSERT INTO '.$this->table.' '. $column.' VALUES '.$values;
+		if ($table) {
+			$sql=$sql='INSERT INTO '.$table.' '. $column.' VALUES '.$values;
+		}
 		$sth=$this->db->prepare($sql);
 		if($sth->execute($details)){
 			$this->error=false;

@@ -19,13 +19,13 @@
  	<div class="container">
 	 <div class="row">
 	  <div class="col-md-2 col-sm-2">
-	  		<a href="index.html" class="logo"><img src="/images/logo.png" alt="" title="Welcome To Wiwigo"></a>
+	  		<a href="/agency/login" class="logo"><img src="/images/logo.png" alt="" title="Welcome To Wiwigo"></a>
 	  </div>
 	  <div class="col-md-10 col-sm-10">
 	  	<ul class="help pull-right clearfix">
 	  		<li class="call">Booking: <a href="tel+1234-5678-9821">1800 12345 789</a></li>
-	  		<li class="sine-in"><span>login</span></li>
-	  		<li class="sine-in last"><span>sign up</span></li>
+	  		<li class="sine-in"><a href="/agency/login"><span>login</span></a></li>
+	  		<li class="sine-in last"><a href="/agency/register"><span>sign up</span></a></li>
 	  	</ul>
 	  </div>
 	 </div>
@@ -112,9 +112,8 @@
 				</nav>
 				<nav class="nav-secondry">
 					<ul class="clearfix">
-						<li><a href="#">Agency Registration</a></li>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Contact Us</a></li>
+						<li><a href="/agency/register">Agency Registration</a></li>
+						<li><a href="/agency/login">Log In</a></li>
 					</ul>
 				</nav>
 			</div>
