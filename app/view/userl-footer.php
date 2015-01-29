@@ -70,3 +70,4 @@
 <!--Custom-->
 <script type="text/javascript" src="/js/custom.js"></script>
 <script type="text/javascript" src="/js/cookie.js"></script>
+<script type="text/javascript" src="/js/parsley.js"></script>

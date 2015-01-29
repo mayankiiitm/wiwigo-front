@@ -231,13 +231,13 @@ $("form").submit(function(e){
 	$("#submit").attr('disabled','true');
 	$("#submit").text('Processing...');
 	$.ajax({
-		url:'http://10.0.0.230/agency/register',
+		url:'<?=API_URL?>/agency/register',
 		type:'POST',
 		data:formData}).done(function(data){
 		result=$.parseJSON(data);
 		if (result.error[0]=='401') {
 			$.ajax({
-				url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
+				url:'<?=WEB_URL?>/mauth?request_token='+$('input[name=request_token]').val(),
 				type:'GET',
 				success: function(data){
 					var result=$.parseJSON(data);
@@ -254,7 +254,7 @@ $("form").submit(function(e){
 			$("#submit").removeAttr('disabled','true');
 			$("#submit").text('REGISTER');
 		}else {
-			window.location.replace('http://10.0.0.3/agency/login');
+			window.location.replace('<?=WEB_URL?>/agency/login');
 		}
 	})
 });
@@ -269,7 +269,7 @@ var state='';
 $("#city").click(function(){
 	if ($("#state").val()>0 && $("#state").val()!=state){
 		$.ajax({
-			url:'http://10.0.0.230/term/cities',
+			url:'<?=API_URL?>/term/cities',
 			type:'GET',
 			data:'state='+$("#state").val(),
 			success: function(data){

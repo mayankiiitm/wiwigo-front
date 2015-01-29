@@ -106,7 +106,7 @@
 			$('#message').hide();
 			var formData = new FormData($(this)[0]);
 			$.ajax({
-				url:'http://10.0.0.230/agency/vehicle',
+				url:'<?=API_URL?>/agency/vehicle',
 				type:'POST',
 				data:formData,
 				processData: false,
@@ -114,7 +114,7 @@
 				success:function(res){
 					result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);

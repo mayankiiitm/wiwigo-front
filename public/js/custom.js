@@ -1,5 +1,3 @@
-
-
 $(document).ready(function(){
 	$("select").selecter({
 		externalLinks: true

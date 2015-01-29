@@ -277,28 +277,28 @@
 								  <?php 
 								  $ses[]=$value;
 								  	if ($value->photo1) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo1?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo1?>"></li>
 								  	<?php } ?>
 								  
 								  	<?php 
 								  	if ($value->photo2) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo2?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo2?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo3) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo3?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo3?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo4) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo4?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo4?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo5) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo5?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo5?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo6) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo6?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo6?>"></li>
 								  	<?php } 
 								  	$res['search']=$ses;
 								    $res['from']=$_GET['from'];
@@ -320,28 +320,28 @@
 							  <ul class="slides">
 					    	 	 <?php 
 								  	if ($value->photo1) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo1?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo1?>"></li>
 								  	<?php } ?>
 								  
 								  	<?php 
 								  	if ($value->photo2) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo2?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo2?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo3) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo3?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo3?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo4) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo4?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo4?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo5) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo5?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo5?>"></li>
 								  	<?php } ?>
 								  <?php 
 								  	if ($value->photo6) { ?>
-								  		<li><img src="http://10.0.0.230/<?=$value->photo6?>"></li>
+								  		<li><img src="<?=API_URL.'/'.$value->photo6?>"></li>
 								  	<?php } ?>
 							  </ul>
 							</div>

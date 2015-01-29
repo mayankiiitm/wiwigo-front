@@ -177,14 +177,14 @@ $('form').submit(function(e){
 	$("#submit").attr('disabled','true');
 	$("#submit").text('Processing...');
 	$.ajax({
-        url: 'http://127.0.0.1/agency/login',
+        url: '<?=API_URL?>/agency/login',
         data: formData,
         type: 'POST'
     }).done(function(data){
 		result=$.parseJSON(data);
 		if (result.error[0]=='401'){
 			$.ajax({
-				url:'http://10.0.0.3/mauth?request_token='+$('input[name=request_token]').val(),
+				url:'<?=WEB_URL?>/mauth?request_token='+$('input[name=request_token]').val(),
 				type:'GET',
 				success: function(data){
 					var result=$.parseJSON(data);
@@ -194,7 +194,7 @@ $('form').submit(function(e){
 			});
 		}else if (result.success==1) {
 			$.cookie('atoken',result.data.access_token);
-			window.location.replace('http://10.0.0.3/agency/login');
+			window.location.replace('<?=WEB_URL?>/agency/login');
 		}else if ($.inArray(104,result.error)>-1) {
 			$("#email-error").show();
 			$('input[name=password]').val('');

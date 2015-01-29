@@ -307,7 +307,7 @@ var state='';
 $("#city").click(function(){
 	if ($("#state").val()>0 && $("#state").val()!=state){
 		$.ajax({
-			url:'http://10.0.0.230/term/cities',
+			url:'<?=API_URL?>/term/cities',
 			type:'GET',
 			data:'state='+$("#state").val(),
 			success: function(data){

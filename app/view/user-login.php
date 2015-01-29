@@ -1,5 +1,4 @@
 <?php require_once 'userl-header.php';?>
-<!--HEADER END-->
 <section class="banner booking">
 	<div class="container">
 		<div class="ficaption"><h1>Book A Cab From Anywhere In India</h1></div>
@@ -35,20 +34,17 @@
 			<div class="col-md-9 col-sm-9">
 				<div class="row">
 					<div class="col-md-12">
-						<div class="heading-two"><h2>User Registration</h2></div>
+						<div class="heading-two"><h2>User Login</h2></div>
 						<div class="agency-registration">
 							<form action="#" method="post">
 								<ul class="registran clearfix">
-			
-									<li ><input type="text" name="name" placeholder="Contact Name" data-parsley-length="[4, 50]" data-parsley-required="true" data-parsley-error-message="Contact Name must be in range 4-25"></li>
-									<li><input type="text" name="mobile" placeholder="Mobile Number" data-parsley-pattern="\d{10}" data-parsley-required="true" data-parsley-error-message="Not a valid mobile number"></li>																										
-									<li ><input type="text" name="email" placeholder="email" data-parsley-required="true" data-parsley-type="email" data-parsley-error-message="Not a valid Email Address" id="email"><span class="error-block" id="email-error">This email is already registered with us</span></li>
-									<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-minlength="5" data-parsley-error-message="Password must be at least 5 character long" id="password"></li>
-									
+								
+									<li><input type="text"  placeholder="Email/Username" data-parsley-required="true" data-parsley-error-message="Please enter Email or Username" id="email" name="email"><span class="error-block" id="email-error">Invalid Username/Email or Password</span></li>
+									<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-error-message="Please enter your password" id="password"></li>
 									<input type="hidden" value="<?=$_SESSION['request_token']?>" name="request_token">
 								</ul>
 								<div class="button-row">
-									<button type="submit" class="btn btn-success btn-vehicle" id="submit">register</button>
+									<button type="submit" class="btn btn-success btn-vehicle" id="submit">LOGIN</button>
 								</div>
 							</form>
 						</div>
@@ -63,21 +59,22 @@
 
 </div>
 <!--WRAPPER END-->
-
 <?php require_once 'userl-footer.php';?>
 <script type="text/javascript">
 $('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
-$("form").submit(function(e){
+$('form').submit(function(e){
 	e.preventDefault();
+	$('#submit').html("<i class='loder'></i>");
 	var formData=$(this).serialize();
 	$("#submit").attr('disabled','true');
 	$("#submit").text('Processing...');
 	$.ajax({
-		url:'<?=API_URL?>/user/register',
-		type:'POST',
-		data:formData}).done(function(data){
+        url: '<?=API_URL?>/user/login',
+        data: formData,
+        type: 'POST'
+    }).done(function(data){
 		result=$.parseJSON(data);
-		if (result.error[0]=='401') {
+		if (result.error[0]=='401'){
 			$.ajax({
 				url:'<?=WEB_URL?>/mauth?request_token='+$('input[name=request_token]').val(),
 				type:'GET',
@@ -87,26 +84,24 @@ $("form").submit(function(e){
 					$('form').submit();
 				}
 			});
-		}else if($.inArray(100 , result.error)>-1) {
-			$("#email-error").show();
-			$("#submit").removeAttr('disabled','true');
-			$("#submit").text('REGISTER');
-		}else if($.inArray(101 ,result.error)>-1) {
-			$("#username-error").show();
-			$("#submit").removeAttr('disabled','true');
-			$("#submit").text('REGISTER');
-		}else {
+		}else if (result.success==1) {
+			$.cookie('utoken',result.data.access_token);
 			window.location.replace('<?=WEB_URL?>/login');
+		}else if ($.inArray(104,result.error)>-1) {
+			$("#email-error").show();
+			$('input[name=password]').val('');
+			$("#submit").removeAttr('disabled','true');
+	        $("#submit").text('LOGIN');
+		}else{
+			$("#email-error").text('Some Error Ocuured. Please try again').show();
+			$("#submit").removeAttr('disabled','true');
+	        $("#submit").text('LOGIN');
 		}
 	})
 });
-$('#email').click(function(){
+$('#email,#password').click(function(){
 	$("#email-error").hide();
 });
-$('#username').click(function(){
-	$("#username-error").hide();
-});
 </script>
-
 </body>
 </html>

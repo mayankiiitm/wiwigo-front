@@ -31,7 +31,7 @@
 						<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 							<div class="col-md-3 col-sm-3">
 								<div class="car-sec">
-									<img src="<?='http://10.0.0.230/'.$value->photo1?>" alt="" title="image">
+									<img src="<?=API_URL.'/'.$value->photo1?>" alt="" title="image">
 									<div class="star-box clearfix">
 										<span><small><?=$value->model_name?></small></span>
 									</div>
@@ -65,7 +65,7 @@
 							<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 								<div class="col-md-3 col-sm-3">
 									<div class="car-sec">
-										<img src="<?='http://10.0.0.230/'.$value->licence?>" alt="" title="image">
+										<img src="<?=API_URL.'/'.$value->licence?>" alt="" title="image">
 									</div>
 								</div>
 
@@ -138,7 +138,7 @@
 		var date=$(this).find('input[name=date]');
 		var data=$(this).serialize();
 		var id=$(this).find('input[name=id]').val();
-		var url='http://10.0.0.230/agency/vehicle/'+id+'/unavailable?access_token='+$('#a_token').val();
+		var url='<?=API_URL?>/agency/vehicle/'+id+'/unavailable?access_token='+$('#a_token').val();
 		$.ajax({
 			url:url,
 			type:'POST',
@@ -146,7 +146,7 @@
 			success:function(res){
 				result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);
@@ -165,13 +165,13 @@
 		var del=$(this);
 		var id=$(this).val();
 		$.ajax({
-			url:'http://10.0.0.230/agency/vehicle/'+id+'/delete',
+			url:'<?=API_URL?>/agency/vehicle/'+id+'/delete',
 			type:'POST',
 			data:'access_token='+$('input[name=access_token]').val(),
 			success:function(res){
 				result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);
@@ -191,13 +191,13 @@
 		var del=$(this);
 		var id=$(this).val();
 		$.ajax({
-			url:'http://10.0.0.230/agency/driver/'+id+'/delete',
+			url:'<?=API_URL?>/agency/driver/'+id+'/delete',
 			type:'POST',
 			data:'access_token='+$('input[name=access_token]').val(),
 			success:function(res){
 				result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);

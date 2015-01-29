@@ -6,7 +6,7 @@ $route->get('/','wiwigo@home');
 $route->get('/search','wiwigo@search');
 $route->get('/booking','wiwigo@booking');
 $route->post('/process-payment','wiwigo@payment');
-$route->get('/user/access_token','mauth@user_access_token');
+$route->get('/user/access_token','mauth@user_token');
 
 
 
@@ -28,6 +28,9 @@ $route->get('/test','test@home');
 
 //user
 $route->get('/register','user@register');
+$route->get('/login','user@login');
+$route->get('/account','useraccount@account');
+
 
 $route->run();
 ?>

@@ -2,7 +2,7 @@
 /**
 * 
 */
-class User
+class Wiwigo
 {
 	
 	function __construct(){
@@ -14,9 +14,9 @@ class User
 	public function search(){
 		$data=Input::get();
 		$curl=new curl;
-		$data1=$curl->get('http://10.0.0.230/term/cars');
+		$data1=$curl->get(API_URL.'/term/cars');
 		$data['cars']=json_decode($data1->text)->data;
-		$datas=$curl->get('http://10.0.0.230/search?'.$_SERVER['QUERY_STRING'].'&request_token='.$_SESSION['request_token']);
+		$datas=$curl->get(API_URL.'/search?'.$_SERVER['QUERY_STRING'].'&request_token='.$_SESSION['request_token']);
 		$data['search']=json_decode($datas->text)->data;
 		View::make('search',$data);
 	}

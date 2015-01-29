@@ -115,7 +115,7 @@
 						<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 							<div class="col-md-3 col-sm-3">
 								<div class="car-sec">
-									<img src="http://10.0.0.230/<?=$value->photo1?>" alt="" title="<?=$value->model?>">
+									<img src="<?=API_URL.'/'.$value->photo1?>" alt="" title="<?=$value->model?>">
 									<div class="star-box clearfix">
 										<span><small><?=$value->model?></small></span>
 									</div>
@@ -214,7 +214,7 @@
 						<div class="row order-detail" style="<?php echo $key?'':'display:block'?>">
 							<div class="col-md-3 col-sm-3">
 								<div class="car-sec">
-									<img src="http://10.0.0.230/<?=$value->photo1?>" alt="" title="<?=$value->model?>">
+									<img src="<?=API_URL.'/'.$value->photo1?>" alt="" title="<?=$value->model?>">
 									<div class="star-box clearfix">
 										<span><small><?=$value->model?></small></span>
 									</div>
@@ -404,11 +404,11 @@
 				var id=$(this).next('input').val();
 				$('.dispatch-row').css({left:lefta, top:topa}).fadeIn();
 				$('.overlay').fadeIn();
-				var url='http://10.0.0.230/agency/drivers/available?access_token='+$('input[name=access_token]').val()+'&'+$(this).val();
+				var url='<?=API_URL?>/agency/drivers/available?access_token='+$('input[name=access_token]').val()+'&'+$(this).val();
 				$.get(url,function(res){
 					result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);
@@ -439,13 +439,13 @@
 			$(this).attr("disabled","disabled").text('Dispatching...');
 			var cur=$(this);
 			$.ajax({
-				url:'http://10.0.0.230/agency/dispatch/'+b_id+'?access_token='+$('input[name=access_token]').val(),
+				url:'<?=API_URL?>/agency/dispatch/'+b_id+'?access_token='+$('input[name=access_token]').val(),
 				type:'POST',
 				data:'d_id='+$("#d_id").val(),
 				success:function(res){
 					result=$.parseJSON(res);
 					if (result.error[0]=='401') {
-						$.post('http://10.0.0.230/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						$.post('<?=API_URL?>/agency/refresh?access_token='+$('input[name=access_token]').val(),function(data){
 							response=$.parseJSON(data);
 							$.cookie('atoken',response.data.access_token);
 							$('input[name=access_token]').val(response.data.access_token);

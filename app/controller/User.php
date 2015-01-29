@@ -4,11 +4,10 @@
 */
 class User
 {
-	
 	function __construct(){
 		Auth::request_token();
 		if (isset($_COOKIE['utoken']) || isset($_COOKIE['u_token'])) {
-			header('Location:/agency/account');
+			header('Location:/account');
 			die;
 		}
 	}

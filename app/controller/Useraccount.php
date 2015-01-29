@@ -14,11 +14,11 @@ class Useraccount
 	
 	public function account(){
 		$curl=new curl;
-		$data=$curl->get('http://10.0.0.230/agency/current?access_token='.$_SESSION['a_token']);
+		$data=$curl->get(API_URL.'/user/current?access_token='.$_SESSION['u_token']);
 		$this->data->data->current_order=json_decode($data->text)->data;
-		$data1=$curl->get('http://10.0.0.230/agency/history?access_token='.$_SESSION['a_token']);
+		$data1=$curl->get(API_URL.'/user/history?access_token='.$_SESSION['u_token']);
 		$this->data->data->order_history=json_decode($data1->text)->data;
-		View::make('agency-account',$this->data);
+		View::make('user-account',$this->data);
 	}
 	public function logout(){
 		session_destroy();
