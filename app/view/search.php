@@ -24,7 +24,7 @@
 
 		  <div class="search-header pull-left">
 		  	<div class="city-form">
-				<form action="#" method="post">
+				<form action="/search" method="get" id="mainsearch">
 					<ul class="clearfix">
 						<li><input type="text" name="from" placeholder="From. Enter a city" value="<?=$data['from']?>"></li>
 						<li><input type="text" name="to" placeholder="To. Enter a city" value="<?=$data['to']?>"></li>
@@ -34,8 +34,6 @@
 						<li>
 							<input type="text" name="end" placeholder="Return" id="return-date" value="<?=$data['end']?>">
 						</li>
-						<input type="hidden" name="long" value="" value="<?=$data['long']?>">
-					    <input type="hidden" name="lat" value="" value="<?=$data['lat']?>">
 						<li><button class="btn btn-success btn-search">search</button></li>
 					</ul>
 				</form>
@@ -67,12 +65,6 @@
 				<div class="row">
 					<div class="col-md-12">
 						<aside>
-							<div class="hotel-info">
-								<span>Nearby destinations</span>
-								<small>Chail40km, 14 Hotels</small>
-								<small>Barog50km, 3 Hotels </small>
-							</div>
-
 							<div class="map-row">
 								<div class="google-map">
 									<iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyCWU5OJnKeeiPo8VQ16BWCJrDvxw294VRw&origin=<?=$_GET['from']?>&destination=<?=$_GET['to']?>"></iframe>
@@ -87,16 +79,14 @@
 							<div class="results-row">
 								<h4>Refine Results</h4>
 
-					
-
 								<div class="resultbox">
 									<span class="result-info"><i class="sprit-airro"></i>make &amp; model</span>
-									<div class="modelbox clearfix">
+									<div class="modelbox clearfix" id="models_checkbox">
 									<?php
 									foreach ($data['cars'] as $key => $value) {?>
-								 <div class="checkbox" id="models_checkbox">
-										     <input type="checkbox" name="checkbox<?=$value->id?>" id="checkbox<?=$value->id?>">
-										     <label for="checkbox<?=$value->id?>" class="css-label"><?=$value->model?></label>
+								 <div class="checkbox">
+										     <input type="checkbox" name="model_<?=$value->id?>" id="model_<?=$value->id?>" value="<?=$value->id?>">
+										     <label for="model_<?=$value->id?>" class="css-label"><?=$value->model?></label>
 									   	</div>
 									<?php } ?>
 										
@@ -109,7 +99,7 @@
 									<span class="result-info"><i class="sprit-airro"></i>seats available</span>
 									<div class="seats-row">
 										
-											<select id="seats">
+											<select id="seats" name="seats">
 												<option value="0">Any</option>
 												<option>1</option>
 												<option>2</option>
@@ -134,10 +124,10 @@
 									<span class="result-info"><i class="sprit-airro"></i>star rating</span>
 									<div class="rating-bar">
 										<span>Star Rating</span>
-										<ul>
+										<ul id="ratings_checkbox">
 											<li>
 												<div class="checkbox">
-											     <input type="checkbox" name="checkboxa" id="checkboxs1" value="5">
+											     <input type="checkbox" name="rating_5" id="rating_5" value="5">
 											     <label for="checkboxs1" class="css-label"></label>
 										        	<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
@@ -149,8 +139,8 @@
 											</li>
 											<li>
 												<div class="checkbox">
-											     <input type="checkbox" name="checkboxa" id="checkboxs2" value="4">
-											     <label for="checkboxs2" class="css-label"></label>
+											     <input type="checkbox" name="rating_4" id="rating_4" value="4">
+											     <label for="rating_4" class="css-label"></label>
 										        	<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
@@ -160,8 +150,8 @@
 											</li>
 											<li>
 												<div class="checkbox">
-											     <input type="checkbox" name="checkboxa" id="checkboxs3" value="3">
-											     <label for="checkboxs3" class="css-label"></label>
+											     <input type="checkbox" name="rating_3" id="rating_3" value="3">
+											     <label for="rating_3" class="css-label"></label>
 										        	<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
@@ -170,8 +160,8 @@
 											</li>
 											<li>
 												<div class="checkbox">
-											     <input type="checkbox" name="checkboxa" id="checkboxs4" value="2">
-											     <label for="checkboxs4" class="css-label"></label>
+											     <input type="checkbox" name="rating_2" id="rating_2" value="2">
+											     <label for="rating_2" class="css-label"></label>
 										        	<i class="sprit-rating-a"></i>
 													<i class="sprit-rating-a"></i>
 													<span>55</span>
@@ -179,8 +169,8 @@
 											</li>
 											<li>
 												<div class="checkbox">
-											     <input type="checkbox" name="checkboxa" id="checkboxs5" value="1">
-											     <label for="checkboxs5" class="css-label"></label>
+											     <input type="checkbox" name="rating_1" id="rating_1" value="1">
+											     <label for="rating_1" class="css-label"></label>
 										        	<i class="sprit-rating-a"></i>
 													<span>8</span>
 											   	</div>
@@ -196,21 +186,21 @@
 									
 									<div class="amenities-row">
 										<div class="checkbox">
-										     <input type="checkbox" name="checkboxac" id="checkbox-a">
-										     <label for="checkbox-a" class="css-label">Air Conditioning</label>
+										     <input type="checkbox" name="ac" id="ac" value="1">
+										     <label for="ac" class="css-label">Air Conditioning</label>
 									   	</div>
 									   	<div class="checkbox">
-										     <input type="checkbox" name="checkboxgps" id="checkbox-b">
-										     <label for="checkbox-b" class="css-label">GPS Tracking</label>
+										     <input type="checkbox" name="gps" id="gps" value="1">
+										     <label for="gps" class="css-label">GPS Tracking</label>
 									   	</div>
 									   	<div class="checkbox">
-										     <input type="checkbox" name="checkboxlc" id="checkbox-c">
-										     <label for="checkbox-c" class="css-label">Luggage Carrier</label>
+										     <input type="checkbox" name="lc" id="lc" value="1">
+										     <label for="lc" class="css-label">Luggage Carrier</label>
 									   	</div>
 
 										<div class="checkbox">
-										     <input type="checkbox" name="checkboxo5" id="checkbox-e">
-										     <label for="checkbox-e" class="css-label">Option5</label>
+										     <input type="checkbox" name="o5" id="o5">
+										     <label for="o5" class="css-label">Option5</label>
 									   	</div>
 
 									</div>
@@ -223,13 +213,17 @@
 									<div class="progress-main">
 										<p>
 											<label for="amount">Price</label>
-											<input type="text" id="amount">
+											<input type="text" id="amount" name="price">
+											<input type="hidden" name="p_min" value="0">
+											<input type="hidden" name="p_max" value="0">
 										</p>
 										<div id="slider-range"></div>
 									</div>
 								</div>
+								<div class="">
+									<button class="btn btn-success btn-search" id="filters" style="height:45px">Apply Filters</button>
+								</div>
 								<!--resultbox end-->
-
 							</div>
 							<!--results-row end-->
 
@@ -240,17 +234,24 @@
 			<div class="col-md-9 col-sm-9">
 				<div class="row">
 					<div class="col-md-4 col-sm-6">
-						<div class="heading-two"><h2>155 cabs found</h2></div>
+						<div class="heading-two"><h2><?=$data['search']->details->search_count?> cabs found</h2></div>
 					</div>
-					<div class="col-md-3 col-md-offset-5 col-sm-3 col-sm-offset-3">
+					<div class="col-md-4 col-md-offset-4 col-sm-3 col-sm-offset-3">
 						<div class="sortbox">
-							<form action="#" method="post">
-								<select>
-									<option>Sort by:</option>
-									<option>Sort by:</option>
-									<option>Sort by:</option>
+								<select id="sortby">
+								<?php 
+								$default=WEB_URL.$_SERVER['REQUEST_URI'];
+								$default=str_replace('&sort=price', '', $default);
+								$default=str_replace('&sort=rating', '', $default);
+								$default=str_replace('&order=1', '', $default);
+								?>
+									<option value="0">Sort By:</option>
+									<option value="<?=$default?>">Default</option>
+									<option value="<?=$default?>&sort=price" <?php echo Input::get('sort')=='price' && !Input::get('order')?'selected':''?>>Price(Low to High)</option>
+									<option value="<?=$default?>&sort=price&order=1" <?php echo Input::get('sort')=='price' && Input::get('order')=='1'?'selected':''?>>Price(High to Low)</option>
+									<option value="<?=$default?>&sort=rating" <?php echo Input::get('sort')=='rating' && !Input::get('order')?'selected':''?>>Rating(Low to High)</option>
+									<option value="<?=$default?>&sort=rating&order=1" <?php echo Input::get('sort')=='rating' && Input::get('order')=='1'?'selected':''?>>Rating(High to Low)</option>
 								</select>
-							</form>
 						</div>
 					</div>
 				</div>
@@ -418,17 +419,15 @@
 															<li><?=ceil($data['search']->details->distance)?>kms</li>
 															<li>Minumum km charged per Day</li>
 															<li>:250 kms</li>
-															<li>Garage to pickup address</li>
-															<li><?=ceil($value->gtp)?>kms</li>
 															<li>Fare Calculation</li>
 															<?php
 															$dis=ceil($data['search']->details->distance);
 															$dur=$data['search']->details->duration;
 
 															 if (250*$dur>2*$dis) {?>
-																<li>:(<?=$dur?> x 250 x <?=$value->rpk?>)+(<?=ceil($value->gtp)?>x 3 x<?=$value->rpk?>)+(<?=$value->ta?>x<?=$dur?>)</li>	
+																<li>:(<?=$dur?> x 250 x <?=$value->rpk?>)+(<?=$value->ta?>x<?=$dur?>)</li>	
 															<?php }else {?> 
-																<li>:(<?=$dis?> x <?=$value->rpk?>)+(<?=ceil($value->gtp)?>x 3 x<?=$value->rpk?>)+(<?=$value->ta?>x<?=$dur?>)</li>	
+																<li>:(<?=$dis?> x <?=$value->rpk?> x 2)+(<?=$value->ta?>x<?=$dur?>)</li>	
 															<?php } ?>
 															
 															<li>Fare</li>
@@ -467,35 +466,61 @@
 				<!--END SECTION-->
 	
 				<?php }?>
-
-				
-
-
-
-
-
-
-
-
-
+				<?php 
+				$page=Input::get('page')?Input::get('page'):1;
+				$num=ceil($data['search']->details->search_count/10);
+				$url=WEB_URL.str_replace('&page='.$page, '', $_SERVER['REQUEST_URI']);
+				$url=str_replace('&page=','', $url);
+				$url1=str_replace('&page','', $url);
+				$url=$url.'&'
+				?>
 				<div class="row">
 					<div class="col-md-12">
 						<nav>
 						  <ul class="pagination">
 						    <li>
-						      <small>Page 1 of 65</small>
+						      <small>Page 1 of <?=$num?></small>
 						    </li>
-						    <li><a href="#">1</a></li>
-						    <li><a href="#">2</a></li>
-						    <li><a href="#">3</a></li>
-						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li>
-						      <a href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
-						    </li>
-						    <li><a href="#">last</a></li>
+						    <?php
+						    if ($page==1) {?>
+						    	<li><span>&laquo;</span></li>
+						    <?php }else{ ?>
+						    	<li><a href="<?=$url1?>">&laquo;</a></li>
+						    	<?php } ?>
+						    <?php 
+						    if ($num<=5 || ($num>5 && $page<=3)) {
+						    	$pivot=$num<=5?$num:5;
+						    	for ($i=1; $i <=$pivot ; $i++) { 
+						    		if ($i==$page) {?>
+						    			<li><span><?=$i?></span></li>		
+						    		<?php }else{?>
+						    			<li><a href="<?=$url?>page=<?=$i?>"><?=$i?></a></li>		
+						    		<?php } ?>
+						    								    			
+						    		
+						    <?php } 
+						    }elseif ($num>5 && $page>3 && $num-$page>=2) { ?>
+						    	<li><a href="<?=$url?>page=<?=$page-2?>"><?=$page-2?></a></li>
+						    	<li><a href="<?=$url?>page=<?=$page-1?>"><?=$page-1?></a></li>
+						    	<li><span><?=$page?></span></li>
+						    	<li><a href="<?=$url?>page=<?=$page+1?>"><?=$page+1?></a></li>
+						    	<li><a href="<?=$url?>page=<?=$page+2?>"><?=$page+2?></a></li>			
+						    <?php } elseif ($num>5 && $page>3 && $num-$page<2) { 
+						    			for ($i=$num-4; $i <=$num ; $i++) { 
+						    				if ($i==$page) { ?>
+												<li><span><?=$i?></span></li>						    					
+						    				
+						    				<?php } else{ ?>
+						    						<li><a href="<?=$url?>page=<?=$i?>"><?=$i?></a></li>
+						    				<?php } 
+						    	} 
+						    } ?>
+						    <?php
+						    if ($page==$num) {?>
+						    	<li><span>&raquo;</span></li>
+						    <?php }else{ ?>
+						    	<li><a href="<?=$url?>page=<?=$num?>">&raquo;</a></li>
+						    	<?php } ?>
 						  </ul>
 						</nav>
 						<!--pagination end-->
@@ -769,11 +794,13 @@
 		 $( "#slider-range" ).slider({
 			range: true,
 			min: 0,
-			max: 7799,
-			values: [ 500, 7799 ],
+			max: 50000,
+			values: [ 0, 50000 ],
 			slide: function( event, ui ) {
 			$( "#amount" ).val($("<div>").html("&#x20B9;").text() + ui.values[ 0 ] +'   '+$("<div>").html("&#x20B9;")
 				.text() + ui.values[ 1 ] );
+			$('input[name=p_min]').val(ui.values[0]);
+			$('input[name=p_max]').val(ui.values[1]);
 			}
 			});
 			$( "#amount" ).val($("<div>").html("&#x20B9;").text() + $( "#slider-range" ).slider( "values", 0 ) 
@@ -819,7 +846,8 @@
 			showOn: "both",
 			buttonImageOnly: true,
 			showButtonPanel: true,
-			dateFormat: "yy-mm-dd"
+			dateFormat: "yy-mm-dd",
+			minDate:0
 		});
 		 //DATEPICKER
 
@@ -1037,6 +1065,63 @@
 	  });
 	  // NIN CROWSEL
 
+	  $('#filters').click(function(e){
+	  	var url='';
+	  	var seats=$('#seats').val();
+	  	var ac=$('#ac').is(":checked")?'1':0;
+	  	var lc=$('#lc').is(":checked")?'1':0;
+	  	var o5=$('#o5').is(":checked")?'1':0;
+	  	var gps=$('#gps').is(":checked")?'1':0;
+	  	var p_min=$('input[name=p_min]').val();
+	  	var p_max=$('input[name=p_max]').val();
+	  	var model='';
+	  	var rating='';
+	  	$('#models_checkbox input[type=checkbox]').each(function() {
+   			if ($(this).is(":checked")) {
+
+       			model=model==''?$(this).val():model+','+$(this).val();
+  			 }
+		});
+		$('#ratings_checkbox input[type=checkbox]').each(function() {
+   			if ($(this).is(":checked")) {
+
+       			rating=rating==''?$(this).val():rating+','+$(this).val();
+  			 }
+		});
+		if (seats!=0) {
+			url+='&seats='+seats;
+		}
+		if (ac!=0) {
+			url+='&ac=1';
+		}
+		if (lc!=0) {
+			url+='&lc=1';
+		}
+		if(o5!=0){
+			url+='&o5=1';
+		}
+		if(gps!=0){
+			url+='&gps=1';
+		}
+		if (p_min!=0) {
+			url+='&p_min='+p_min;
+		}
+		if (p_max!=0) {
+			url+='&p_max='+p_max;
+		}
+		if (model){
+			url+='&model='+model;
+		}
+		if (rating) {
+			url+='&rating='+rating
+		}
+		window.location.replace('http://wiwigo.com/search?'+$('#mainsearch').serialize()+url);
+	  });
+	$('#sortby').change(function(){
+		if ($(this).val()!='0') {
+			window.location.replace($(this).val());
+		};
+	});
 	});
 </script>
 

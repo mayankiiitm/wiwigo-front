@@ -4,15 +4,19 @@
 */
 class Wiwigo
 {
-	
+	protected $user;
 	function __construct(){
 		Auth::request_token();
+		$this->user=Auth::user();
 	}
 	public function home(){
 		View::make('home');
 	}
 	public function search(){
 		$data=Input::get();
+		if (!$data['from'] || !$data['to'] || !$data['start'] || !$data['end']) {
+			return header('location:/');
+		}
 		$curl=new curl;
 		$data1=$curl->get(API_URL.'/term/cars');
 		$data['cars']=json_decode($data1->text)->data;
@@ -44,6 +48,7 @@ class Wiwigo
 			$data['start']=$datas->start;
 			$data['end']=$datas->end;
 		}
+		$data['user']=$this->user;
 		View::make('booking',$data);
 	}
 

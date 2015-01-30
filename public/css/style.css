@@ -729,7 +729,7 @@ aside{
 	position: relative;
 	float: left;
 	width: 49%;
-	padding-bottom: 15px;
+	padding-bottom: 20px;
 }
 .form-two .ui-datepicker-trigger{
 	position: absolute;
@@ -1230,7 +1230,15 @@ pagination
 	color:#3e3e3e;
 	text-transform:capitalize;
 }
-
+.pagination > li > span{
+	padding: 6 14px;
+	border-radius:4px;
+	border:1px solid #bbb;
+	color:#3e3e3e;
+	text-transform:capitalize;
+	font-size: 15px;
+	background: #BBB;
+}
 .pagination li small{
 	font-style: italic;
 	display: inline-block;
@@ -1330,6 +1338,7 @@ pagination
 	overflow: hidden;
 	padding: 0;
 	margin-bottom: 0;
+	margin-top: 60px;
 }
 .google-map iframe{
 	border: 0;
@@ -1338,7 +1347,6 @@ pagination
 
 .distance{
 	margin-bottom: 0;
-	margin: 0 10px;
 	padding: 8px;
 }
 
@@ -2832,4 +2840,32 @@ Loder css
 
 .disable{
 
+}
+
+/*
+Pickup Address
+----------------------*/
+.pickup-row{
+	width: 430px;
+	position: fixed;
+	z-index: 501;
+	background: #fff;
+	display: none;
+	box-sizing: border-box;
+}
+.pickup-row .pickup-box{
+	padding: 15px;
+}
+.pickup-row .pickup-box > span{
+	text-transform: capitalize;
+	font-weight: 400;
+	display: block;
+	padding-bottom: 10px;
+}
+.pickup-row .pickup-box .sort-row{
+	padding-bottom: 10px;
+}
+.pickup-row .btn-pare{
+	text-transform:uppercase;
+	font-weight: 300;
 }

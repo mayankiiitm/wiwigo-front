@@ -51,64 +51,71 @@
 						<div class="tab-article" style="display:block;">
 							<form action="/process-payment?id=<?=$_GET['id']?>" method="post">
 								<ul class="form-two clearfix">
-									<li><input type="text" name="name" placeholder="Full Name"></li>
-									<li><input type="text" name="email" placeholder="Email"></li>
-									<li><input type="text" name="mobile" placeholder="Mobile"></li>
-									<li><input type="text" name="pickup_time" placeholder="Pickup Time"></li>
+									<li><input type="text" name="name" placeholder="Full Name" value="<?php echo isset($data['user']->data->name)?$data['user']->data->name:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Name"></li>
+									<li><input type="text" name="email" placeholder="Email" value="<?php echo isset($data['user']->data->email)?$data['user']->data->email:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Email"></li>
+									<li><input type="text" name="mobile" placeholder="Mobile" value="<?php echo isset($data['user']->data->mobile)?$data['user']->data->mobile:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Mobile"></li>
+									<li><input type="text" name="pickup_time" placeholder="Pickup Time" data-parsley-required="true" data-parsley-error-message="Please enter Time"></li>
 								</ul>
 
 								<div class="pickupbox">
 									<h4>Pickup Address</h4>
 									<ul class="form-two clearfix">
 										<li>
+											<?php $s_id=isset($data['user']->data->s_id)?$data['user']->data->s_id:0?>
 											<select id="state" name="state" data-parsley-required="true" data-parsley-min=1 data-parsley-error-message="Please select state">
 											<option value="0"><em>---Select State---</em></option>
-											<option value="1">Andaman &amp; Nicobar</option>
-											<option value="2">Andhra Pradesh</option>
-											<option value="3">Arunachal Pradesh</option>
-											<option value="4">Assam</option>
-											<option value="5">Bihar</option>
-											<option value="6">Chandigarh</option>
-											<option value="7">Chhattisgarh</option>
-											<option value="8">Dadra &amp; Nagar Haveli</option>
-											<option value="9">Daman &amp; Diu</option>
-											<option value="10">Delhi</option>
-											<option value="11">Goa</option>
-											<option value="12">Gujarat</option>
-											<option value="13">Haryana</option>
-											<option value="14">Himachal Pradesh</option>
-											<option value="15">Jammu &amp; Kashmir</option>
-											<option value="16">Jharkhand</option>
-											<option value="17">Karnataka</option>
-											<option value="18">Kerala</option>
-											<option value="19">Lakshadweep</option>
-											<option value="20">Madhya Pradesh</option>
-											<option value="21">Maharashtra</option>
-											<option value="22">Manipur</option>
-											<option value="23">Meghalaya</option>
-											<option value="24">Mizoram</option>
-											<option value="25">Nagaland</option>
-											<option value="26">Orissa</option>
-											<option value="27">Pondicherry</option>
-											<option value="28">Punjab</option>
-											<option value="29">Rajasthan</option>
-											<option value="30">Sikkim</option>
-											<option value="31">Tamil Nadu</option>
-											<option value="32">Tripura</option>
-											<option value="33">Uttar Pradesh</option>
-											<option value="34">Uttaranchal</option>
-											<option value="35">West Bengal</option>
+											<option value="1" <?=$s_id==1?'selected':''?>>Andaman &amp; Nicobar</option>
+											<option value="2" <?=$s_id==2?'selected':''?>>Andhra Pradesh</option>
+											<option value="3" <?=$s_id==3?'selected':''?>>Arunachal Pradesh</option>
+											<option value="4" <?=$s_id==4?'selected':''?>>Assam</option>
+											<option value="5" <?=$s_id==5?'selected':''?>>Bihar</option>
+											<option value="6" <?=$s_id==6?'selected':''?>>Chandigarh</option>
+											<option value="7" <?=$s_id==7?'selected':''?>>Chhattisgarh</option>
+											<option value="8" <?=$s_id==8?'selected':''?>>Dadra &amp; Nagar Haveli</option>
+											<option value="9" <?=$s_id==9?'selected':''?>>Daman &amp; Diu</option>
+											<option value="10" <?=$s_id==10?'selected':''?>>Delhi</option>
+											<option value="11" <?=$s_id==11?'selected':''?>>Goa</option>
+											<option value="12" <?=$s_id==12?'selected':''?>>Gujarat</option>
+											<option value="13" <?=$s_id==13?'selected':''?>>Haryana</option>
+											<option value="14" <?=$s_id==14?'selected':''?>>Himachal Pradesh</option>
+											<option value="15" <?=$s_id==15?'selected':''?>>Jammu &amp; Kashmir</option>
+											<option value="16" <?=$s_id==16?'selected':''?>>Jharkhand</option>
+											<option value="17" <?=$s_id==17?'selected':''?>>Karnataka</option>
+											<option value="18" <?=$s_id==18?'selected':''?>>Kerala</option>
+											<option value="19" <?=$s_id==19?'selected':''?>>Lakshadweep</option>
+											<option value="20" <?=$s_id==20?'selected':''?>>Madhya Pradesh</option>
+											<option value="21" <?=$s_id==21?'selected':''?>>Maharashtra</option>
+											<option value="22" <?=$s_id==22?'selected':''?>>Manipur</option>
+											<option value="23" <?=$s_id==23?'selected':''?>>Meghalaya</option>
+											<option value="24" <?=$s_id==24?'selected':''?>>Mizoram</option>
+											<option value="25" <?=$s_id==25?'selected':''?>>Nagaland</option>
+											<option value="26" <?=$s_id==26?'selected':''?>>Orissa</option>
+											<option value="27" <?=$s_id==27?'selected':''?>>Pondicherry</option>
+											<option value="28" <?=$s_id==28?'selected':''?>>Punjab</option>
+											<option value="29" <?=$s_id==29?'selected':''?>>Rajasthan</option>
+											<option value="30" <?=$s_id==30?'selected':''?>>Sikkim</option>
+											<option value="31" <?=$s_id==31?'selected':''?>>Tamil Nadu</option>
+											<option value="32" <?=$s_id==32?'selected':''?>>Tripura</option>
+											<option value="33" <?=$s_id==33?'selected':''?>>Uttar Pradesh</option>
+											<option value="34" <?=$s_id==34?'selected':''?>>Uttaranchal</option>
+											<option value="35" <?=$s_id==35?'selected':''?>>West Bengal</option>
 										</select>
 										</li>
 										<li>
-											<input type="text" name="city" placeholder="City" id="city">
+											<input type="text" name="city" placeholder="City" id="city" value="<?php echo isset($data['user']->data->city)?$data['user']->data->city:''?>" data-parsley-required="true" data-parsley-error-message="Please enter City">
 										</li>
 										<li>
-											<input type="text" name="area" placeholder="Area" id="area">
+											<input type="text" name="area" placeholder="Area" id="area" value="<?php echo isset($data['user']->data->area)?$data['user']->data->area:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Area">
 										</li>
-										<li><input type="text" name="address" placeholder="Pickup Address"></li>
-										<li><input type="password" name="password" placeholder="Password"></li>
-										<li><input type="password" placeholder="Confirm Password"></li>
+										<li><input type="text" name="address" placeholder="Pickup Address" value="<?php echo isset($data['user']->data->address)?$data['user']->data->address:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Pickup Address"></li>
+											
+										<?php if (isset($data['user']->data->id)) { ?>
+											<input type="hidden" name="u_id" value="<?=$data['user']->data->id?>">
+										<?php } else {?>
+											<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-error-message="Please enter Password"></li>
+										    <li><input type="password" placeholder="Confirm Password" data-parsley-required="true" data-parsley-error-message="Please enter Name"></li>
+										<?php }?>
+										
 									</ul>
 								</div>
 
@@ -208,82 +215,16 @@
 </div>
 <!--WRAPPER END-->
 
-<!--footer start-->
-<footer>
-	<div class="container">
-		<div class="row footer-inner">
-			<div class="col-md-8 col-sm-8">
-				<nav class="nav-primary">
-					<ul class="clearfix">
-						<li><a href="#">About</a></li>
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Blog</a></li>
-						<li><a href="#">Career</a></li>
-						<li><a href="#">Terms &amp; Conditions</a></li>
-						<li><a href="#">Cancellation &amp; Refund Policy </a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
-				</nav>
-				<nav class="nav-secondry">
-					<ul class="clearfix">
-						<li><a href="#">Agency Registration</a></li>
-						<li><a href="#">My Account</a></li>
-						<li><a href="#">Contact Us</a></li>
-					</ul>
-				</nav>
-			</div>
-			<div class="col-md-2 col-md-offset-2 col-sm-2 col-sm-offset-2">
-				<div class="social">
-					<ul class="clearfix">
-						<li><a href="https://facebook.com/" target="_new" title="facebook"><i class="sprit-fb"></i></a></li>
-						<li><a href="https://twitter.com/" target="_new" title="Twitter"><i class="sprit-twi"></i></a></li>
-						<li><a href="https://plus.google.com" traget="_new" title="Google Plus" target="_new"><i class="sprit-goolge"></i></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="row copyright-box">
-			<div class="col-md-8 col-sm-8">
-				<div class="copyright pull-right">
-					<p>Copyright © Wiwigo. All Rights Reserved.</p>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<span class="racspase-logo pull-right"><img src="images/rackspace.png" alt="" title=""></span>
-			</div>
-		</div>
-	</div>
-</footer>
-<!--footer end-->
 
 
 
 
 <!--jquery libraries-->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/jquery-1.11.1.min.js"><\/script>')</script>
-
-<!--jqueryui plugin-->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-<script>window.jQuery.ui || document.write('<script src="/js/jquery-ui.min.js"><\/script>')</script>
-
-<!--Custome selectbox plugin-->
-<script type="text/javascript" src="/js/jquery.fs.selecter.js"></script>
-
-<!--Boostrap plugin-->
-<script type="text/javascript" src="/js/bootstrap.js"></script>
-
-<!--flexslider plugin-->
-<script type="text/javascript" src="/js/jquery.flexslider.js"></script>
-
-<!--datetimepicker plugin-->
-<script type="text/javascript" src="/js/jquery.datetimepicker.js"></script>
-
-<!--Custom-->
-<script type="text/javascript" src="/js/custom.js"></script>
+<?php require_once 'userl-footer.php';?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
 		//NTH-CHILD EVEN IE8 SUPPORT
 		//$(".form-two li:nth-child(even)").css("margin-left", "15px");
 

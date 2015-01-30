@@ -57,18 +57,16 @@
 			<h1>Book your outstation cab now</h1>
 			<form action="/search" method="get">
 				<ul class="clearfix">
-					<li><input type="text" name="from" placeholder="Starting city"></li>
-					<li><input type="text" name="to" placeholder="Destination city"></li>
+					<li style="margin-bottom:20px"><input type="text" name="from" placeholder="Starting city" data-parsley-required="true" data-parsley-error-message="Please fill in Starting City"></li>
+					<li style="margin-bottom:20px"><input type="text" name="to" placeholder="Destination city" data-parsley-required="true" data-parsley-error-message="Please fill in Destination City"></li>
 					<li>
-						<input type="text" name="start" placeholder="Start date" id="depart">
+						<input type="text" name="start" placeholder="Start date" id="depart" readonly="true" data-parsley-required="true" data-parsley-error-message="Please Select Start Date">
 					</li>
 					<li>
-						<input type="text" name="end" placeholder="Return date" id="return">
+						<input type="text" name="end" placeholder="Return date" id="return" readonly="true" data-parsley-required="true" data-parsley-error-message="Please select return date">
 					</li>
-					<input type="hidden" name="long" value="">
-					<input type="hidden" name="lat" value="">
 				</ul>
-				<button class="btn btn-success btn-org" id="submit">search cabs</button>
+				<button class="btn btn-success btn-org" id="submit" type="submit">search cabs</button>
 			</form>
 		</div>
 	</div>	
@@ -129,12 +127,24 @@
 
 </div>
 <!--WRAPPER END-->
-
+<div class="overlay"></div>
+<div class="pickup-row">
+	<div class="pickup-box">
+		<span>Pickup Address</span>
+		
+			<div class="sort-row">
+				<input type="text" placeholder="Pickup Address">
+			</div>
+			<button class="btn btn-success">Submit</button>
+		
+	</div>
+</div>
 <!--footer start-->
 <?php require_once 'userl-footer.php';?>
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		initialize();
 		$('.flexslider').flexslider({
 			animation: "slide",
 			controlNav: false,
@@ -152,18 +162,50 @@
 			showOn: "both",
 			buttonImageOnly: true,
 			showButtonPanel: true,
-			dateFormat: "yy-mm-dd"
+			dateFormat: "yy-mm-dd",
+			minDate: 0
 		});
-		$('form').submit(function(e){
-		 	if ($('input[name=starting]').val()=='') {e.preventDefault()};
-		});
-
-		navigator.geolocation.getCurrentPosition(function(cor){
-			$('input[name=long]').val(cor.coords.longitude);
-			$('input[name=lat]').val(cor.coords.latitude);
-		});
-
+	$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
 	});
+</script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+<script type="text/javascript">
+	var geocoder;
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+} 
+//Get the latitude and the longitude;
+function successFunction(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    codeLatLng(lat, lng)
+}
+
+function errorFunction(){
+    alert("Geocoder failed");
+}
+
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+
+
+
+  }
+
+  function codeLatLng(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results)
+        if (results[1]) {
+         //formatted address
+         $('input[name=from]').val(results[0].formatted_address);
+        } 
+      } 
+    });
+  }
 </script>
 
 
