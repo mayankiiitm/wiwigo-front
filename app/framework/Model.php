@@ -27,9 +27,10 @@ class Model
 		$keys=array_keys($details);
 		$column='('.implode(',', $keys).')';
 		$values='(:'.implode(',:',$keys).')';
-		$sql='INSERT INTO '.$this->table.' '. $column.' VALUES '.$values;
 		if ($table) {
-			$sql=$sql='INSERT INTO '.$table.' '. $column.' VALUES '.$values;
+			$sql='INSERT INTO '.$table.' '. $column.' VALUES '.$values;
+		}else{
+			$sql='INSERT INTO '.$this->table.' '. $column.' VALUES '.$values;
 		}
 		$sth=$this->db->prepare($sql);
 		if($sth->execute($details)){

@@ -25,11 +25,17 @@ class Wiwigo
 		View::make('search',$data);
 	}
 	public function booking(){
+		$id=Input::get('id');
+		$curl=new curl;
+		if ((!isset($_SESSION['booking']) && !isset($_SESSION['search'])) || !$id) {
+			header('location:/');
+			die;
+		}
 		if (isset($_SESSION['search'])) {
 			$session=json_decode($_SESSION['search']);
 			unset($_SESSION['search']);
 			foreach ($session->search as $key => $value) {
-				if ($value->id==$_GET['id']) {
+				if ($value->id==$id) {
 					$val=$value;
 					break;
 				}
@@ -49,13 +55,18 @@ class Wiwigo
 			$data['end']=$datas->end;
 		}
 		$data['user']=$this->user;
+		$curl->post(API_URL.'/booking/setflag?access_token='.$_SESSION['u_token'],'id='.$id);
 		View::make('booking',$data);
 	}
 
 	public function payment(){
 		$data=Input::post();
+		$data['u_id']=$this->user->data->id;
 		if ($data['payment_page']=='payment') {
 			$_SESSION['mypayment']=json_encode($data);
+		}
+		if (!isset($_SESSION['mypayment'])) {
+			header('location:/');
 		}
 		View::make('payment',$data);
 	}

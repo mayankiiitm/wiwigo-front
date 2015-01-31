@@ -37,6 +37,15 @@ require_once 'user-header.php';?>
 								<li class="clearfix">
 									<span>Phone:</span> <p><?=$data->data->mobile?></p>
 								</li>
+								<?php if(!$data->data->active) {?>
+								<li class="clearfix">
+								<span>Mobile Verification:</span>
+								<div id="verifyli">
+									<input type="text" id="verifyi" style="width:65px;height:35px" placeholder="code" name="code">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="color:red;text-decoration:underline" id="verifyb">Verify</a>
+								</div>
+								</li>
+								<?php }?>
 								<li class="clearfix">
 									<span>Address:</span> <p><?=$data->data->address.', '.$data->data->area.', '.$data->data->city.', '.$data->data->state.', PIN-'.$data->data->pin?></p>
 								</li>
@@ -230,7 +239,7 @@ require_once 'user-header.php';?>
 	</div>
 </div>
 <!--content end-->
-
+<input type="hidden" name="access_token" value="<?=$_SESSION['u_token']?>">
 </div>
 <!--WRAPPER END-->
 <?php require_once 'user-footer.php';?>
@@ -259,6 +268,32 @@ require_once 'user-header.php';?>
 			$this.addClass('active').next('.order-detail').slideDown()
 			.parents('li').siblings('li').find('p').removeClass('active');
 			}
+		});
+		$('#verifyb').click(function(){
+			var btn=$(this);
+			var code=$('#verifyi').val();
+			if (!code || code=='') {alert('enter code');return false;}
+			$.ajax({
+				url:'<?=API_URL?>/user/verify',
+				data:$('input').serialize(),
+				type:'POST',
+				success:function(res){
+					result=$.parseJSON(res);
+					if (result.error[0]=='401') {
+					$.post('<?=API_URL?>/user/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						response=$.parseJSON(data);
+						$.cookie('atoken',response.data.access_token);
+						$('input[name=access_token]').val(response.data.access_token);
+						btn.trigger("click");
+					});
+					}else if (result.success=='1') {
+						$('#verifyli').html('<p>Verified</p>')
+					}else{
+						alert('Invalid Code');
+					}
+				}
+			});	
+			return false;		
 		});
 	});
 </script>

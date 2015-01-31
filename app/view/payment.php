@@ -20,21 +20,12 @@ pay_page( array (
 
 
 function payment_success() {
+	$model=new Model;
 	/* Payment success logic goes here. */
 	//echo "Payment Success" . "<pre>" . print_r( $_POST, true ) . "</pre>";
 	$payment=json_decode($_SESSION['mypayment']);
 	Helper::pre($payment);
-	$model=new Model;
-	$sql1="INSERT INTO users (name,email,mobile,password) VALUES (:name,:email,:mobile,:password)";
-	$sql2="INSERT INTO bookings (origin,destination,start,end,v_id,u_id,mobile,email,pickup_time,female,price,advance,state,city,area,address,pin) VALUES
-		   (:origin,:destination,:start,:end,:v_id,:u_id,:mobile,:email,:pickup_time,:female,:price,:advance,:state,:city,:area,:address,:pin)";
-	$param1=array(
-		'name'=>$payment->name,
-		'email'=>$payment->email,
-		'mobile'=>$payment->mobile,
-		'password'=>password_hash($payment->password,PASSWORD_BCRYPT,array('cost'=>10))
-		);
-	$param2=array(
+	$param=array(
 		'origin'=>$payment->origin,
 		'destination'=>$payment->destination,
 		'start'=>$payment->start,
@@ -49,17 +40,11 @@ function payment_success() {
 		'state'=>$payment->state,
 		'city'=>$payment->city,
 		'area'=>$payment->area,
-		'address'=>$payment->address
+		'address'=>$payment->address,
+		'u_id'=>$payment->u_id
 		);
-	if($id=$model->insert($param1,'users')){
-		$param2['u_id']=$id;
-		if($model->insert($param2,'bookings')){
-			echo "success";
-			Helper::pre($_SESSION);
-		}
-		else{
-			var_dump($model);
-		}
+	if($id=$model->insert($param,'bookings')){
+		header('location:/booking-confirm?id='.$id);
 	}
 }
 

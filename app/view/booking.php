@@ -52,9 +52,12 @@
 							<form action="/process-payment?id=<?=$_GET['id']?>" method="post">
 								<ul class="form-two clearfix">
 									<li><input type="text" name="name" placeholder="Full Name" value="<?php echo isset($data['user']->data->name)?$data['user']->data->name:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Name"></li>
-									<li><input type="text" name="email" placeholder="Email" value="<?php echo isset($data['user']->data->email)?$data['user']->data->email:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Email"></li>
+									<li><input type="text" name="email" placeholder="Email" value="<?php echo isset($data['user']->data->email)?$data['user']->data->email:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Email"><span class="error-block" id="email-error">This email is already registered with us</span></li>
 									<li><input type="text" name="mobile" placeholder="Mobile" value="<?php echo isset($data['user']->data->mobile)?$data['user']->data->mobile:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Mobile"></li>
+								
 									<li><input type="text" name="pickup_time" placeholder="Pickup Time" data-parsley-required="true" data-parsley-error-message="Please enter Time"></li>
+									<li id="verifyli" style="display:none"><input type="text" id="verifyi" style="width:70px;height:35px" placeholder="code" name="code">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="color:red;text-decoration:underline" id="verifyb">Verify</a></li>
 								</ul>
 
 								<div class="pickupbox">
@@ -109,12 +112,9 @@
 										</li>
 										<li><input type="text" name="address" placeholder="Pickup Address" value="<?php echo isset($data['user']->data->address)?$data['user']->data->address:''?>" data-parsley-required="true" data-parsley-error-message="Please enter Pickup Address"></li>
 											
-										<?php if (isset($data['user']->data->id)) { ?>
-											<input type="hidden" name="u_id" value="<?=$data['user']->data->id?>">
-										<?php } else {?>
+										<?php if (!isset($data['user']->data->id)) { ?>
 											<li><input type="password" name="password" placeholder="Password" data-parsley-required="true" data-parsley-error-message="Please enter Password"></li>
-										    <li><input type="password" placeholder="Confirm Password" data-parsley-required="true" data-parsley-error-message="Please enter Name"></li>
-										<?php }?>
+										<?php } ?>
 										
 									</ul>
 								</div>
@@ -124,12 +124,12 @@
 							        <label for="checkboxb" class="css-label">Solo female traveller will be using this rental.</label>
 							   </div>
 								<input type="hidden" value="<?=$_SESSION['request_token']?>" name="request_token">
+								<input type="hidden" value="<?=isset($_SESSION['u_token'])?$_SESSION['u_token']:''?>" name="access_token">
 								<input type="hidden" name="origin" value="<?=$data['from']?>">
 								<input type="hidden" name="destination" value="<?=$data['to']?>">
 								<input type="hidden" name="start" value="<?=$data['start']?>">
 								<input type="hidden" name="end" value="<?=$data['end']?>">
 								<input type="hidden" name="v_id" value="<?=$data['search']->id?>">
-								<input type="hidden" name="u_id" value="">
 								<input type="hidden" name="price" value="<?=$data['search']->price?>">
 								<input type="hidden" name="advance" value="<?=ceil($data['search']->price/5)?>">
 								<input type="hidden" name="payment_page" value="payment">
@@ -141,10 +141,10 @@
 						<div class="tab-article">
 							<div class="getway-box">
 								<h2>Full fledged payment gateway info:</h2>
-								<form action="#" method="post">
+								<!--<form action="#" method="post">
 									<ul class="form-two clearfix">
 										<li><input type="text" name="card" placeholder="Card Number"></li>
-										<li><input type="text" name="name" placeholder="Name"></li>
+										<li><input type="text" placeholder="Name"></li>
 										<li>
 											<select>
 												<option>Card Expiration Month</option>
@@ -199,7 +199,7 @@
 									
 									<button type="submit" class="btn btn-success btn-org">continue</button>
 									
-								</form>
+								</form>-->
 							</div>
 							<!--getway-box end-->
 						</div>
@@ -223,26 +223,130 @@
 <?php require_once 'userl-footer.php';?>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
-		//NTH-CHILD EVEN IE8 SUPPORT
-		//$(".form-two li:nth-child(even)").css("margin-left", "15px");
+var login=<?=isset($_SESSION['u_token'])?'\''.$_SESSION['u_token'].'\'':0;?>;
+var verified=0;
+var mobile=$('input[name=mobile]').val();
+$(document).ready(function(){
+	$('form').parsley({errorTemplate: "<span class='my-parsley-error'></span>",errorsWrapper: "<div></div>",});
+	//NTH-CHILD EVEN IE8 SUPPORT
+	//$(".form-two li:nth-child(even)").css("margin-left", "15px");
 
-		//TAB SECTION
-		$('ul.tab-bar li').click(function(){
-			if ($(this).attr('id')=='disable') {
-				return false;};
-			var num = $(this).index();
-			$(this).addClass('active').siblings().removeClass('active');
-			$('.tab-article:eq('+num+')').slideDown().siblings('.tab-article').slideUp();
-			return false;
-		});
-		$('#disable').click(function(e){
-			e.preventDefault();
-		});
-
+	//TAB SECTION
+	$('ul.tab-bar li').click(function(){
+		if ($(this).attr('id')=='disable') {
+			return false;};
+		var num = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.tab-article:eq('+num+')').slideDown().siblings('.tab-article').slideUp();
+		return false;
 	});
+	$('#disable').click(function(e){
+		e.preventDefault();
+	});
+	$('form').submit(function(e){
+		if(mobile!=$('input[name=mobile]').val()){
+			verified=0;
+			mobile=$('input[name=mobile]').val();
+		}
+		if (!login) {
+			$.ajax({
+				url:'<?=API_URL?>/user/register',
+				type:'POST',
+				data:$('input[name=email],input[name=password],input[name=name],input[name=mobile],input[name=request_token]').serialize()
+			}).done(function(data){
+				result=$.parseJSON(data);
+				if (result.error[0]=='401') {
+					$.ajax({
+						url:'<?=WEB_URL?>/mauth?request_token='+$('input[name=request_token]').val(),
+						type:'GET',
+						success: function(data){
+							var result=$.parseJSON(data);
+							$('input[name=request_token]').val(result.data.request_token);
+							$('form').submit();
+						}
+					});
+				}else if(result.success=='1' || $.inArray(100,result.error)>-1) {
+					//try login
+					$.ajax({
+				        url: '<?=API_URL?>/user/login',
+				        data: $('input[name=email],input[name=password],input[name=request_token]').serialize(),
+				        type: 'POST'
+				    }).done(function(data){
+						result=$.parseJSON(data);
+						if (result.error[0]=='401'){
+							$.ajax({
+								url:'<?=WEB_URL?>/mauth?request_token='+$('input[name=request_token]').val(),
+								type:'GET',
+								success: function(data){
+									var result=$.parseJSON(data);
+									$('input[name=request_token]').val(result.data.request_token);
+									$('form').submit();
+								}
+							});
+						}else if (result.success==1) {
+							$.cookie('utoken',result.data.access_token);
+							login=result.data.access_token;
+							$('input[name=access_token]').val(login);
+							$('form').submit();
+						}else if ($.inArray(104,result.error)>-1) {
+							alert('invalid crdential');
+						}else{
+							alert('some error occured');
+						}
+					})
+					//end try login
+				}
+			})
+			return false;
+		}
+		if (!verified) {
+			$.ajax({
+				url:'<?=API_URL?>/user/verified?access_token='+login,
+				data:'mobile='+$('input[name=mobile]').val(),
+				type:'POST',
+				success:function(res){
+					var result=$.parseJSON(res);
+					if (result.success=='1') {
+						verified=1;
+						$('form').submit();
+					}else{
+						$('#verifyli').show();
+					}
+					
+				}
+			});
+			return false;
+		};
+	});
+	$('#verifyb').click(function(){
+			var btn=$(this);
+			var code=$('#verifyi').val();
+			if (!code || code=='') {alert('enter code');return false;}
+			$.ajax({
+				url:'<?=API_URL?>/user/verify',
+				data:$('input[name=access_token],input[name=code],input[name=mobile]').serialize(),
+				type:'POST',
+				success:function(res){
+					result=$.parseJSON(res);
+					if (result.error[0]=='401') {
+					$.post('<?=API_URL?>/user/refresh?access_token='+$('input[name=access_token]').val(),function(data){
+						response=$.parseJSON(data);
+						$.cookie('utoken',response.data.access_token);
+						$('input[name=access_token]').val(response.data.access_token);
+						btn.trigger("click");
+					});
+					}else if (result.success=='1') {
+						$('#verifyli').html('<p>Verified</p>');
 
+						$('form').submit();
+					}else{
+						alert('Invalid Code');
+					}
+				}
+			});	
+			return false;		
+		});
+});
 var availablecities=[];
 var state='';
 $("#city").click(function(){

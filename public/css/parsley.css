@@ -37,7 +37,7 @@ opacity: 1;
 	font-style: italic;
 }
 .error-block{
-	display: none;
+	display: none; 
     position: absolute;
 	color: red;
 	font-style: italic;	

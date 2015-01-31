@@ -33,5 +33,20 @@ class Useraccount
 		}
 		header('Location:/login');
 	}
+	public function confirm(){
+		$id=$_GET['id'];
+		$curl=new curl;
+		$data=$curl->get(API_URL.'/booking?id='.$id.'&access_token='.$_SESSION['u_token']);
+		$this->data->data->booking=json_decode($data->text)->data;
+		if(isset($_SESSION['mypayment'])){
+			$sms=new sendsms;
+			$booking=$this->data->data->booking;
+			$sms->send_sms($booking->mobile,"Hello ".$booking->name.", Thanks for booking your cab through Wiwigo. Booking ID: $id, from ".$booking->origin." to ".$booking->destination." @ Pick up time: ".$booking->pickup_time.", Start date: ".$booking->start.", End date: ".$booking->end.". We shall send you the cab and driver details 2 hrs before the pickup time.");
+		}
+		unset($_SESSION['mypayment']);
+		unset($_SESSION['booking']);
+		unset($_SESSION['search']);
+		View::make('booking-confirm',$this->data);
+	}
 }
 ?>

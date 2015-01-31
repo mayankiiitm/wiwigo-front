@@ -30,6 +30,7 @@ $route->get('/test','test@home');
 $route->get('/register','user@register');
 $route->get('/login','user@login');
 $route->get('/account','useraccount@account');
+$route->get('/booking-confirm','useraccount@confirm');
 
 
 $route->run();
